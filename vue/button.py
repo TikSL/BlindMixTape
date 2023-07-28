@@ -41,7 +41,7 @@ class Button:
             return
 
         self.is_pressed = True
-        # Afficher les images d'enfoncement du bouton
+
         for k in range(len(self.images)):
             self.image_index = k
             self.update(screen)
@@ -52,7 +52,5 @@ class Button:
             self.update(screen)
             pygame.display.flip()
             pygame.time.delay(50)
-            # screen.blit(self.images[k], (600, 200+50*k))
-
 
         self.is_pressed = False
