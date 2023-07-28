@@ -1,3 +1,5 @@
+import threading
+
 import pygame
 import sys
 from pygame import mixer, time, USEREVENT
@@ -166,14 +168,17 @@ def lobby():
 
                 if lobbyOptionButtonNbrJoueursMoins.checkForInput(lobbyMousePosition):
                     if len(liste_vignettes) > 2:
+                        lobbyOptionButtonNbrJoueursMoins.press(screen)
                         liste_vignettes.pop()
                         VignetteJoueur.positionNouveau = len(liste_vignettes)
                         print(f"supp vignette")
                 if lobbyOptionButtonDiffPlus.checkForInput(lobbyMousePosition):
                     if difficulty_lvl < 2:
+                        lobbyOptionButtonDiffPlus.press(screen)
                         difficulty_lvl += 1
                 if lobbyOptionButtonDiffMoins.checkForInput(lobbyMousePosition):
                     if difficulty_lvl > 0:
+                        lobbyOptionButtonDiffMoins.press(screen)
                         difficulty_lvl -= 1
 
             volume_bar.handle_event(event)
@@ -224,8 +229,11 @@ def main_menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if menuButtonPlay.checkForInput(MENU_MOUSE_POS):
+                    menuButtonPlay.press(screen)
+                    pygame.time.delay(1000)
                     lobby()
                 if menuButtonQuit.checkForInput(MENU_MOUSE_POS):
+                    menuButtonQuit.press(screen)
                     pygame.quit()
                     sys.exit()
 
