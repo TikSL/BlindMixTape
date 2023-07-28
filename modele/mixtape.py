@@ -6,6 +6,7 @@ from pygame import mixer
 import song
 import deezer
 
+
 class Mixtape:
 
     def __init__(self):
