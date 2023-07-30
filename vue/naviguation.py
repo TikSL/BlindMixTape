@@ -31,7 +31,7 @@ def play():
 
 
 def lobby():
-    liste_vignettes = [VignetteJoueur(900, 150), VignetteJoueur(900 + 170, 150 + (1 // 3) * 200)]
+    liste_vignettes = [VignetteJoueur(900, 125), VignetteJoueur(900 + 170, 125 + (1 // 3) * 200)]
 
     difficulty = ["FACILE", "MOYEN", "DIFFICILE"]
     difficulty_lvl = 0
@@ -136,6 +136,9 @@ def lobby():
                 pygame.quit()
                 sys.exit()
 
+            for vignette in liste_vignettes:
+                vignette.text.handle_event(event)
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for vignette in liste_vignettes:
 
@@ -159,7 +162,7 @@ def lobby():
                     if len(liste_vignettes) < 9:
                         lobbyOptionButtonNbrJoueursPlus.press(screen)
                         nouvelle_vignette = VignetteJoueur(900 + (len(liste_vignettes) % 3) * 170,
-                                                           150 + (len(liste_vignettes) // 3) * 200)
+                                                           125 + (len(liste_vignettes) // 3) * 200)
                         liste_vignettes.append(nouvelle_vignette)
 
                 if lobbyOptionButtonNbrJoueursMoins.checkForInput(lobbyMousePosition):
@@ -177,6 +180,7 @@ def lobby():
                         difficulty_lvl -= 1
 
             volume_bar.handle_event(event)
+
         pygame.display.update()
 
 
