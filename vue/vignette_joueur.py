@@ -29,8 +29,9 @@ class VignetteJoueur:
         # self.text = pygame.font.Font(font, 25).render(self.nom_joueur, True, "white")
         # self.text_rect = self.text.get_rect(center=(x + 150 // 2, y + 150 + 12))
         self.text = TexteModifiable(self.x, self.y + 150 + 5)
+        self.bufferPerso = random.choice(ressources.persos)
         self.personnage_image = Button(
-            images=[piocherPerso()], pos=(self.x+75, self.y + 80),
+            images=[pygame.transform.scale(pygame.image.load(self.bufferPerso), (100, 100))], pos=(self.x+75, self.y + 80),
             text_input=" ", font=ressources.get_font(ressources.nunitoRegular, 70),
             base_color="White",
             hovering_color="#6DC300")
@@ -66,5 +67,10 @@ class VignetteJoueur:
         self.text.setPos(pos=(self.x, self.y + 150 + 5))
 
     def changer_personnage(self):
-        self.personnage_image.setImages([piocherPerso()])
+        print(ressources.persos.index(self.bufferPerso))
+        print(self.bufferPerso)
+        print("prochain", (ressources.persos.index(self.bufferPerso) + 1)%21)
+        self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) + 1)%20]
+
+        self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso), (100, 100))])
         self.personnage_image.setPos(pos=(self.x + 75, self.y + 80))

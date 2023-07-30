@@ -52,4 +52,6 @@ lobbyMute = [pygame.transform.scale(pygame.image.load("assets/buttons/Mute/Mute_
 lobbySoundOn = [pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_1.png"), (60, 60)),
                    pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_2.png"), (60, 60)),
                    pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_3.png"), (60, 60))]
+
+persos = [f"assets/perso/perso_{k}.png" for k in range(1, 21)]
 # Play
