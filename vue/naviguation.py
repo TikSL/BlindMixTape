@@ -147,7 +147,7 @@ def lobby():
                         liste_vignettes.remove(vignette)
                         for k in range(0, len(liste_vignettes)):
                             if k >= index_suppr:
-                                liste_vignettes[k].realigner_vignette(k)
+                                liste_vignettes[k].realigner(k)
 
                     if vignette.personnage_image.checkForInput(lobbyMousePosition):
                         vignette.changer_personnage()
