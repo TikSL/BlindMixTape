@@ -45,4 +45,11 @@ vignetteFond = pygame.transform.scale(pygame.image.load("assets/windows/Window_1
 
 vignetteButtonCroix = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_23.png"), (30, 30))]
 
+lobbyMute = [pygame.transform.scale(pygame.image.load("assets/buttons/Mute/Mute_1.png"), (60, 60)),
+                   pygame.transform.scale(pygame.image.load("assets/buttons/Mute/Mute_2.png"), (60, 60)),
+                   pygame.transform.scale(pygame.image.load("assets/buttons/Mute/Mute_3.png"), (60, 60))]
+
+lobbySoundOn = [pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_1.png"), (60, 60)),
+                   pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_2.png"), (60, 60)),
+                   pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_3.png"), (60, 60))]
 # Play
