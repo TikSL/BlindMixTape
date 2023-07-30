@@ -18,6 +18,11 @@ class Button:
         self.rect = self.images[self.image_index].get_rect(center=(self.x_pos, self.y_pos))
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
+    def setPos(self, pos):
+        self.x_pos = pos[0]
+        self.y_pos = pos[1]
+
+
     def update(self, screen):
         screen.blit(self.images[self.image_index], self.rect)
         screen.blit(self.text, self.text_rect)

@@ -1,5 +1,3 @@
-import threading
-
 import pygame
 import sys
 from pygame import mixer, time, USEREVENT
@@ -20,10 +18,6 @@ pygame.display.set_caption("BlindMixTape")
 # Charger l'image de fond en utilisant les dimensions de l'écran
 background = pygame.transform.scale(pygame.image.load(ressources.background), (screen_width, screen_height))
 volume_bar = VolumeBar(screen_width - 300, screen_height - 100, 200, 30)
-
-
-def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à la taille désirée
-    return pygame.font.Font(font, size)
 
 
 def play():
@@ -56,44 +50,45 @@ def lobby():
         screen.blit(ressources.lobbyWindowOption1, (140, 50))
 
         # Titre
-        lobbyTitreOption = get_font(ressources.nunitoRegular, 45).render("OPTIONS", True, "white")
+        lobbyTitreOption = ressources.get_font(ressources.nunitoRegular, 45).render("OPTIONS", True, "white")
         lobbyTitreOption_Rect = lobbyTitreOption.get_rect(center=(415, 100))
         screen.blit(lobbyTitreOption, lobbyTitreOption_Rect)
 
         # Options du nombre de joueurs
         screen.blit(ressources.lobbyWindowOption2, (180, 200))
         screen.blit(ressources.lobbyIconPlayers, (190, 215))
-        lobbyTitreOptionNbrJoueurs = get_font(ressources.nunitoRegular, 25).render(f"Nombre de joueurs", True,
+        lobbyTitreOptionNbrJoueurs = ressources.get_font(ressources.nunitoRegular, 25).render(f"Nombre de joueurs", True,
                                                                                    "#CC191C")
         lobbyTitreOptionNbrJoueurs_Rect = lobbyTitreOptionNbrJoueurs.get_rect(center=(440, 230))
         screen.blit(lobbyTitreOptionNbrJoueurs, lobbyTitreOptionNbrJoueurs_Rect)
 
-        lobbyDataNombreJoueurs = get_font(ressources.nunitoRegular, 25).render(f"{num_players}", True, "#CC191C")
+        lobbyDataNombreJoueurs = ressources.get_font(ressources.nunitoRegular, 25).render(f"{num_players}", True, "#CC191C")
         lobbyDataNombreJoueurs_Rect = lobbyDataNombreJoueurs.get_rect(center=(450, 280))
         screen.blit(lobbyDataNombreJoueurs, lobbyDataNombreJoueurs_Rect)
 
         lobbyOptionButtonNbrJoueursPlus = Button(
             images=ressources.lobbyButtonPlus,
             pos=(550, 280),
-            text_input="", font=get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
 
         lobbyOptionButtonNbrJoueursPlus.update(screen)
 
         lobbyOptionButtonNbrJoueursMoins = Button(
             images=ressources.lobbyButtonMoins,
             pos=(350, 280),
-            text_input="", font=get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="", font=
+            ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
         lobbyOptionButtonNbrJoueursMoins.update(screen)
 
         # Option difficulté
         screen.blit(ressources.lobbyWindowOption2, (180, 370))
         screen.blit(ressources.lobbyIconDifficulty, (190, 385))
 
-        lobbyTitreOptionDifficulte = get_font(ressources.nunitoRegular, 25).render(f"Difficulté", True, "#CC191C")
+        lobbyTitreOptionDifficulte = ressources.get_font(ressources.nunitoRegular, 25).render(f"Difficulté", True, "#CC191C")
         lobbyTitreOptionDifficulte_Rect = lobbyTitreOptionDifficulte.get_rect(center=(440, 400))
         screen.blit(lobbyTitreOptionDifficulte, lobbyTitreOptionDifficulte_Rect)
 
-        lobbyDataLvlDifficulte = get_font(ressources.nunitoRegular, 25).render(f"{difficulty[difficulty_lvl]}", True,
+        lobbyDataLvlDifficulte = ressources.get_font(ressources.nunitoRegular, 25).render(f"{difficulty[difficulty_lvl]}", True,
                                                                                "#CC191C")
         lobbyDataLvlDifficulte_Rect = lobbyDataLvlDifficulte.get_rect(center=(450, 450))
         screen.blit(lobbyDataLvlDifficulte, lobbyDataLvlDifficulte_Rect)
@@ -101,12 +96,12 @@ def lobby():
         lobbyOptionButtonDiffPlus = Button(
             images=ressources.lobbyButtonPlus,
             pos=(550, 450),
-            text_input="", font=get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
         lobbyOptionButtonDiffPlus.update(screen)
         lobbyOptionButtonDiffMoins = Button(
             images=ressources.lobbyButtonMoins,
             pos=(350, 450),
-            text_input="", font=get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
         lobbyOptionButtonDiffMoins.update(screen)
 
         # TODO Rajouter une option
@@ -116,11 +111,11 @@ def lobby():
         lobbyButtonBack = Button(
             images=ressources.lobbyButtonBack,
             pos=(80, 795),
-            text_input="", font=get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
         lobbyButtonBack.update(screen)
 
         lobbyButtonPlay = Button(images=ressources.lobbyButtonPlay, pos=(915, 790),
-                                 text_input="PLAY", font=get_font(ressources.nunitoRegular, 70), base_color="White",
+                                 text_input="PLAY", font=ressources.get_font(ressources.nunitoRegular, 70), base_color="White",
                                  hovering_color="#6DC300")
 
         for button in [lobbyButtonPlay]:
@@ -134,23 +129,16 @@ def lobby():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and len(liste_vignettes) > 2:
                     for vignette in liste_vignettes:
-                        if vignette.check_clic(event.pos) == 1:
-
-                            print([k.nom_joueur for k in liste_vignettes])
+                        if vignette.icon_croix.checkForInput(lobbyMousePosition):
                             index_suppr = liste_vignettes.index(vignette)
                             liste_vignettes.remove(vignette)
-                            print([k.nom_joueur for k in liste_vignettes])
-                            print(index_suppr)
                             for k in range(0, len(liste_vignettes)):
                                 if k >= index_suppr:
-                                    print(f"Alignement {liste_vignettes[k]} {liste_vignettes[k].nom_joueur}")
                                     liste_vignettes[k].realigner_vignette()
-
                             VignetteJoueur.positionNouveau = len(liste_vignettes)
-                            print(f"supp vignette {vignette}, {vignette.nom_joueur}")
-                        elif vignette.check_clic(event.pos) == 2:
-                            vignette.changer_personnage()
-                            pygame.display.flip()
+                        # elif vignette.check_clic(event.pos) == 2:
+                        #     vignette.changer_personnage()
+                        #     pygame.display.flip()
                 if lobbyButtonBack.checkForInput(lobbyMousePosition):
                     main_menu()
                 if lobbyButtonPlay.checkForInput(lobbyMousePosition):
@@ -171,7 +159,6 @@ def lobby():
                         lobbyOptionButtonNbrJoueursMoins.press(screen)
                         liste_vignettes.pop()
                         VignetteJoueur.positionNouveau = len(liste_vignettes)
-                        print(f"supp vignette")
                 if lobbyOptionButtonDiffPlus.checkForInput(lobbyMousePosition):
                     if difficulty_lvl < 2:
                         lobbyOptionButtonDiffPlus.press(screen)
@@ -208,12 +195,12 @@ def main_menu():
         screen.blit(pygame.image.load("assets/logo.png"), (350, 100))
         # Créer les boutons "PLAY", "OPTIONS" et "QUIT" avec un effet de changement de couleur au survol
         menuButtonPlay = Button(images=ressources.menuPlayButton, pos=(screen_width / 4, screen_height * 0.5),
-                                text_input="PLAY", font=get_font(ressources.nunitoRegular, 70), base_color="White",
+                                text_input="PLAY", font=ressources.get_font(ressources.nunitoRegular, 70), base_color="White",
                                 hovering_color="#6DC300")
         # OPTIONS_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(640, 400),
         #                         text_input="OPTIONS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
         menuButtonQuit = Button(images=ressources.menuQuitButton, pos=(screen_width / 4, screen_height * 0.7),
-                                text_input="QUIT", font=get_font(ressources.nunitoRegular, 70), base_color="White",
+                                text_input="QUIT", font=ressources.get_font(ressources.nunitoRegular, 70), base_color="White",
                                 hovering_color="#CC191C")
 
         # Afficher le texte "MAIN MENU" et les boutons
@@ -230,7 +217,6 @@ def main_menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if menuButtonPlay.checkForInput(MENU_MOUSE_POS):
                     menuButtonPlay.press(screen)
-                    pygame.time.delay(1000)
                     lobby()
                 if menuButtonQuit.checkForInput(MENU_MOUSE_POS):
                     menuButtonQuit.press(screen)
