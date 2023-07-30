@@ -26,6 +26,8 @@ class TexteModifiable:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.text_surface.get_rect(topleft=(self.x, self.y)).collidepoint(event.pos):
                 self.is_editing = True
+                if self.text_input == "???":
+                    self.text_input = ""
             else:
                 self.is_editing = False
             self.update_text_surface()

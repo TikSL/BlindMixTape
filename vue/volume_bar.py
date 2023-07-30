@@ -29,17 +29,12 @@ class VolumeBar:
         )
 
     def draw(self, surface):
-        # Afficher les éléments de la barre de volume sur l'écran
         surface.blit(self.volume_fill, (self.x, self.y))  # Afficher la barre de volume remplie
 
-        # Redimensionner la barre de volume en fonction du volume actuel
         volume_bar_width = int(self.current_volume * self.width)
         volume_bar_current = pygame.transform.scale(self.volume_bar.subsurface((0, 0, volume_bar_width, self.height)),
                                                     (volume_bar_width, self.height))
         surface.blit(volume_bar_current, (self.x, self.y))  # Afficher la barre de volume actuelle
-
-        # Afficher l'icône du volume
-        # Afficher l'icône du volume à côté de la barre
         self.volumeButton.update(surface)
 
     def handle_event(self, event, mousePosition, screen):
@@ -77,10 +72,12 @@ class VolumeBar:
                 # Ajuster le volume de la musique
                 pygame.mixer.music.set_volume(self.current_volume)
 
-            if self.current_volume == 0:
-                self.volumeButton.setImages(ressources.lobbyMute)
-                pygame.mixer.music.set_volume(self.current_volume)
-            else:
-                self.volumeButton.setImages(ressources.lobbySoundOn)
+                if self.current_volume == 0:
+                    self.volumeButton.setImages(ressources.lobbyMute)
+                    pygame.mixer.music.set_volume(self.current_volume)
+
+                else:
+                    self.volumeButton.setImages(ressources.lobbySoundOn)
+
 
 

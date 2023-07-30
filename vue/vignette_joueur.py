@@ -42,7 +42,12 @@ class VignetteJoueur:
         self.personnage_image.setPos(pos=(self.x+75, self.y + 80))
         self.text.setPos(pos=(self.x, self.y + 150 + 5))
 
-    def changer_personnage(self):
+    def changer_personnageApres(self):
         self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) + 1)%20]
+        self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso), (100, 100))])
+        self.personnage_image.setPos(pos=(self.x + 75, self.y + 80))
+
+    def changer_personnageAvant(self):
+        self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) - 1)%20]
         self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso), (100, 100))])
         self.personnage_image.setPos(pos=(self.x + 75, self.y + 80))

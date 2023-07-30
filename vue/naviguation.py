@@ -10,6 +10,7 @@ from volume_bar import VolumeBar
 pygame.init()
 
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
+print(screen_width, screen_height)
 
 # Définir la taille de la fenêtre en utilisant les dimensions de l'écran
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
@@ -17,16 +18,30 @@ pygame.display.set_caption("BlindMixTape")
 
 # Charger l'image de fond en utilisant les dimensions de l'écran
 background = pygame.transform.scale(pygame.image.load(ressources.background), (screen_width, screen_height))
-volume_bar = VolumeBar(screen_width - 300, screen_height - 100, 200, 30)
+volume_bar = VolumeBar(screen_width*0.805, screen_height*0.884, screen_width*0.130, screen_height*0.035)
 
 
 def play():
     while True:
+        screen.blit(background, (0, 0))
+        playMousePosition = pygame.mouse.get_pos()
+        # Retour menu principal
+        lobbyButtonBack = Button(
+            images=ressources.lobbyButtonBack,
+            pos=(screen_width*0.052, screen_height*0.920),
+            text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White",
+            hovering_color="Green")
+        lobbyButtonBack.update(screen)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        screen.blit(background, (0, 0))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if lobbyButtonBack.checkForInput(playMousePosition):
+                    main_menu()
+
+
         pygame.display.update()
 
 
@@ -150,7 +165,10 @@ def lobby():
                                 liste_vignettes[k].realigner(k)
 
                     if vignette.personnage_image.checkForInput(lobbyMousePosition):
-                        vignette.changer_personnage()
+                        if event.button == 3:
+                            vignette.changer_personnageAvant()
+                        else:
+                            vignette.changer_personnageApres()
 
                 if lobbyButtonBack.checkForInput(lobbyMousePosition):
                     main_menu()
