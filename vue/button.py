@@ -23,6 +23,8 @@ class Button:
         self.y_pos = pos[1]
         self.rect = self.images[self.image_index].get_rect(center=(self.x_pos, self.y_pos))
 
+    def setImages(self, nouvelleListe):
+        self.images = nouvelleListe
 
     def update(self, screen):
         screen.blit(self.images[self.image_index], self.rect)

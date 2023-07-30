@@ -27,14 +27,21 @@ class VignetteJoueur:
         # self.icon_croix_rect = self.icon_croix.get_rect(topright=(self.rect.right - 5, self.rect.y + 5))
         self.text = pygame.font.Font(font, 25).render(self.nom_joueur, True, "white")
         self.text_rect = self.text.get_rect(center=(x + 150 // 2, y + 150 + 12))
-        self.personnage_image = piocherPerso()
-        self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
+        self.personnage_image = Button(
+            images=[piocherPerso()], pos=(self.x+75, self.y + 80),
+            text_input=" ", font=ressources.get_font(ressources.nunitoRegular, 70),
+            base_color="White",
+            hovering_color="#6DC300")
+        # self.personnage_image = piocherPerso()
+        # self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
 
     def afficher(self, screen):
         screen.blit(self.image, self.rect)
-        self.icon_croix.update(screen)
         screen.blit(self.text, self.text_rect)
-        screen.blit(self.personnage_image, self.personnage_image_rect)
+        self.icon_croix.update(screen)
+        self.personnage_image.update(screen)
+        # screen.blit(self.text, self.text_rect)
+        # screen.blit(self.personnage_image, self.personnage_image_rect)
 
     # def check_clic(self, position):
     #     # if self.icon_croix_rect.collidepoint(position):
@@ -50,9 +57,10 @@ class VignetteJoueur:
         # self.icon_croix_rect = self.icon_croix.get_rect(topright=(self.rect.right - 5, self.rect.y + 5))
         # self.text = pygame.font.Font(font, 25).render(self.nom_joueur, True, "white")
         self.text_rect = self.text.get_rect(center=(self.x + 150 // 2, self.y + 150 + 12))
-        self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
+        # self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
         self.icon_croix.setPos(pos=(self.x + 150 - 5, self.y + 5))
+        self.personnage_image.setPos(pos=(self.x+75, self.y + 80))
 
     def changer_personnage(self):
-        self.personnage_image = piocherPerso()
-        self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
+        self.personnage_image.setImages([piocherPerso()])
+        self.personnage_image.setPos(pos=(self.x + 75, self.y + 80))

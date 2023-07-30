@@ -135,29 +135,29 @@ def lobby():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1 and len(liste_vignettes) > 2:
-                    for vignette in liste_vignettes:
-                        if vignette.icon_croix.checkForInput(lobbyMousePosition):
-                            index_suppr = liste_vignettes.index(vignette)
-                            liste_vignettes.remove(vignette)
-                            for k in range(0, len(liste_vignettes)):
-                                if k >= index_suppr:
-                                    liste_vignettes[k].realigner_vignette(k)
 
-                        # elif vignette.check_clic(event.pos) == 2:
-                        #     vignette.changer_personnage()
-                        #     pygame.display.flip()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for vignette in liste_vignettes:
+
+                    if vignette.icon_croix.checkForInput(lobbyMousePosition) and len(liste_vignettes) > 2:
+                        index_suppr = liste_vignettes.index(vignette)
+                        liste_vignettes.remove(vignette)
+                        for k in range(0, len(liste_vignettes)):
+                            if k >= index_suppr:
+                                liste_vignettes[k].realigner_vignette(k)
+
+                    if vignette.personnage_image.checkForInput(lobbyMousePosition):
+                        vignette.changer_personnage()
+
                 if lobbyButtonBack.checkForInput(lobbyMousePosition):
                     main_menu()
+
                 if lobbyButtonPlay.checkForInput(lobbyMousePosition):
                     play()
+
                 if lobbyOptionButtonNbrJoueursPlus.checkForInput(lobbyMousePosition):
                     if len(liste_vignettes) < 9:
                         lobbyOptionButtonNbrJoueursPlus.press(screen)
-
-                        # Limitez le nombre de vignettes à 9 (3x3)
-
                         nouvelle_vignette = VignetteJoueur(900 + (len(liste_vignettes) % 3) * 170,
                                                            150 + (len(liste_vignettes) // 3) * 200)
                         liste_vignettes.append(nouvelle_vignette)
