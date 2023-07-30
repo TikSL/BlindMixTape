@@ -22,7 +22,7 @@ class VolumeBar:
         self.volume_bar = pygame.transform.scale(pygame.image.load("assets/windows/Window_65.png"), (self.width, self.height))
         #self.volume_icon = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_25.png"), (self.height*2, self.height*2))
         self.volumeButton = button.Button(
-            images=ressources.lobbySoundOn, pos=(self.x - 70, self.y + self.height // 2 - 30),
+            images=ressources.lobbySoundOn, pos=(self.x - 32, self.y +15),
             text_input=" ", font=ressources.get_font(ressources.nunitoRegular, 70),
             base_color="White",
             hovering_color="#6DC300"

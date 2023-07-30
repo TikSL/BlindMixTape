@@ -179,7 +179,7 @@ def lobby():
                         lobbyOptionButtonDiffMoins.press(screen)
                         difficulty_lvl -= 1
 
-            volume_bar.handle_event(event)
+            volume_bar.handle_event(event,mousePosition=lobbyMousePosition, screen=screen)
 
         pygame.display.update()
 
@@ -246,7 +246,7 @@ def main_menu():
 
                 pygame.display.update()
 
-            volume_bar.handle_event(event)
+            volume_bar.handle_event(event, mousePosition=MENU_MOUSE_POS, screen=screen)
 
 
 mixer.music.unload()
