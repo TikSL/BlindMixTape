@@ -79,8 +79,8 @@ def lobby():
         lobbyOptionButtonNbrJoueursMoins = Button(
             images=ressources.lobbyButtonMoins,
             pos=(350, 280),
-            text_input="", font=
-            ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
+            text_input="",
+            font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White", hovering_color="Green")
         lobbyOptionButtonNbrJoueursMoins.update(screen)
 
         # Option difficulté
