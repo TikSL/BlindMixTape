@@ -9,8 +9,6 @@ font = "assets/Nunito/static/Nunito-Bold.ttf"
 
 class VignetteJoueur:
 
-    positionNouveau = 2
-
     def __init__(self, x, y):
         self.nom_joueur = "???"
         self.image = ressources.vignetteFond
@@ -25,10 +23,10 @@ class VignetteJoueur:
         # self.icon_croix_rect = self.icon_croix.get_rect(topright=(self.rect.right - 5, self.rect.y + 5))
         self.text = pygame.font.Font(font, 25).render(self.nom_joueur, True, "white")
         self.text_rect = self.text.get_rect(center=(x + 150 // 2, y + 150 + 12))
-        self.position = self.positionNouveau
         self.personnage_image = self.piocherPerso()
         self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
-        print("CREATION ", self.icon_croix.x_pos, self.icon_croix.y_pos)
+
+
 
     def piocherPerso(self):
         return pygame.transform.scale(pygame.image.load(f"assets/perso/perso_{random.randint(1, 16)}.png"),(100, 100))
@@ -48,17 +46,17 @@ class VignetteJoueur:
     #         return 2
     #     return 3
 
-    def realigner_vignette(self):
-        self.position -= 1
-        self.x = 900 + (self.position % 3) * 170
-        self.y = 150 + (self.position // 3) * 200
+    def realigner_vignette(self,k):
+
+        self.x = 900 + (k % 3) * 170
+        self.y = 150 + (k // 3) * 200
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         # self.icon_croix_rect = self.icon_croix.get_rect(topright=(self.rect.right - 5, self.rect.y + 5))
         # self.text = pygame.font.Font(font, 25).render(self.nom_joueur, True, "white")
         self.text_rect = self.text.get_rect(center=(self.x + 150 // 2, self.y + 150 + 12))
         self.personnage_image_rect = self.personnage_image.get_rect(center=(self.x + 75, self.y + 75 + 5))
         self.icon_croix.setPos(pos=(self.x+150-5,self.y + 5))
-        print("MODIF ", self.icon_croix.x_pos, self.icon_croix.y_pos)
+
 
     def changer_personnage(self):
         self.personnage_image = self.piocherPerso()
