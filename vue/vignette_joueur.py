@@ -17,8 +17,8 @@ class VignetteJoueur:
         self.y = y
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         self.icon_croix = Button(images=ressources.vignetteButtonCroix,
-                                 pos=(self.x + (0.094 * (0.049 * ressources.screen_width)),
-                                      self.y + (0.006*ressources.screen_height)),
+                                 pos=(self.x + (0.094 * ressources.screen_width), self.y +
+                                      (0.003 * ressources.screen_height)),
                                  text_input=" ", font=ressources.get_font(ressources.nunitoRegular,
                                                                           round(0.081 * ressources.screen_height)),
                                  base_color="White",
