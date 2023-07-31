@@ -132,7 +132,7 @@ def lobby():
         # Retour menu principal
         lobbyButtonBack = Button(
             images=ressources.lobbyButtonBack,
-            pos=(80, 795),
+            pos=(screen_width*0.052, screen_height*0.920),
             text_input="", font=ressources.get_font(ressources.nunitoRegular, 10), base_color="White",
             hovering_color="Green")
         lobbyButtonBack.update(screen)
