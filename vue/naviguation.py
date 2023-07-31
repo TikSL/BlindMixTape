@@ -46,7 +46,7 @@ def play():
 
 
 def lobby():
-    liste_vignettes = [VignetteJoueur(900, 125), VignetteJoueur(900 + 170, 125 + (1 // 3) * 200)]
+    liste_vignettes = [VignetteJoueur(ressources.screen_width * 0.586, ressources.screen_height * 0.145), VignetteJoueur(ressources.screen_width * 0.697, ressources.screen_height * 0.145)]
 
     difficulty = ["FACILE", "MOYEN", "DIFFICILE"]
     difficulty_lvl = 0
