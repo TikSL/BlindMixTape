@@ -83,5 +83,8 @@ persos = [f"assets/perso/perso_{k}.png" for k in range(1, 21)]
 
 # Play
 
-playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_47.png"), (largeurBoutons, hauteurBoutons))]
-playButtonMuteMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button2_35.png"), (largeurBoutons, hauteurBoutons))]
+playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_47.png"), (screen_width*0.07, screen_width*0.07))]
+playButtonMuteMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button2_35.png"), (screen_width*0.07, screen_width*0.07))]
+playButtonMuteTest = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_46.png"), (screen_width*0.07, screen_width*0.07))]
+
+

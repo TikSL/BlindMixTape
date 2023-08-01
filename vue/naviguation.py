@@ -35,21 +35,26 @@ def playAlignementJoueursBas(nbrVignettes):
 
     for index_vignette, vignette in enumerate(listeVignettes):
         position_x = espace_horizontal * (index_vignette + 1) + 0.097 * screen_width * index_vignette
-        vignette.setPos((position_x, screen_height - 0.24 * screen_height))
         vignette.icon_croix = None
+        vignette.setPos((position_x, screen_height - 0.24 * screen_height))
 
 
-def play():
+
+def playListening():
     global listeVignettes
     global listeJoueurs
 
     playAlignementJoueursBas(len(listeVignettes))
 
-    playMusicBar = MusicBar(200, 100, 50, 10, 100)
+    playButtonMusic = Button(
+        images=ressources.playButtonPlayMusic,
+        pos=(screen_width * 0.5, screen_height * 0.1),
+        text_input=None, font=None, base_color=None, hovering_color = None)
+    playSoundOn = True
 
     playButtonBack = Button(
         images=ressources.lobbyButtonBack,
-        pos=(screen_width * 0.052, screen_height * 0.920),
+        pos=(screen_width * 0.948, screen_height * 0.08),
         text_input=None, font=None, base_color=None, hovering_color=None)
 
     while True:
@@ -57,9 +62,8 @@ def play():
         playMousePosition = pygame.mouse.get_pos()
         for i, vignette in enumerate(listeVignettes):
             vignette.afficher(screen)
-        playMusicBar.update(10, screen=screen)
 
-        for button in [playButtonBack]:
+        for button in [playButtonBack, playButtonMusic]:
             button.update(screen)
 
         for event in pygame.event.get():
@@ -70,8 +74,48 @@ def play():
                 if playButtonBack.checkForInput(playMousePosition):
                     listeVignettes = []
                     main_menu()
+                if playButtonMusic.checkForInput(playMousePosition):
+                    if playSoundOn:
+                        playButtonMusic.setImages(ressources.playButtonMuteMusic)
+                        pygame.mixer.music.pause()
+                        playPause()
 
-                playMusicBar.handle_event(event, screen)
+        pygame.display.update()
+
+def playPause():
+
+    playButtonMusic = Button(
+        images=ressources.playButtonMuteMusic,
+        pos=(screen_width * 0.5, screen_height * 0.1),
+        text_input=None, font=None, base_color=None, hovering_color=None)
+    playSoundOn = True
+
+    playButtonTest = Button(
+        images=ressources.playButtonMuteMusic,
+        pos=(screen_width * 0.5, screen_height * 0.5),
+        text_input=None, font=None, base_color=None, hovering_color=None)
+
+
+    while True:
+        screen.blit(background, (0, 0))
+        playMousePosition = pygame.mouse.get_pos()
+
+        for button in [playButtonMusic, playButtonTest]:
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if playButtonMusic.checkForInput(playMousePosition):
+                    if playSoundOn:
+                        playButtonMusic.setImages(ressources.playButtonMuteMusic)
+                        pygame.mixer.music.unpause()
+                        playListening()
+
+                if playButtonTest.checkForInput(playMousePosition):
+                    attribution_points()
 
         pygame.display.update()
 
@@ -246,7 +290,7 @@ def lobby():
                 if lobbyButtonPlay.checkForInput(lobbyMousePosition):
                     for vignette in listeVignettes:
                         listeJoueurs.append(player.Player(vignette.text))
-                    play()
+                    playListening()
 
                 if lobbyOptionButtonNbrJoueursPlus.checkForInput(lobbyMousePosition):
                     if len(listeVignettes) < 9:

@@ -35,7 +35,8 @@ class VignetteJoueur:
 
     def __update__(self):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        self.icon_croix.setPos(pos=(self.x + (0.094 * ressources.screen_width), self.y +
+        if self.icon_croix:
+            self.icon_croix.setPos(pos=(self.x + (0.094 * ressources.screen_width), self.y +
                                     (0.003 * ressources.screen_height)))
         self.personnage_image.setPos(pos=(self.x + (0.049 * ressources.screen_width), self.y +
                                           (0.093 * ressources.screen_height)))
