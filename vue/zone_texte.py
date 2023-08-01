@@ -4,7 +4,7 @@ import ressources
 # Couleurs
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
+GRAY = (150, 150, 150)
 
 
 class TexteModifiable:

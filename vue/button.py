@@ -7,16 +7,21 @@ class Button:
         self.num_images = len(images)
         self.x_pos = pos[0]
         self.y_pos = pos[1]
-        self.font = font
-        self.base_color = base_color
-        self.hovering_color = hovering_color
-        self.text_input = text_input
-        self.text = self.font.render(self.text_input, True, self.base_color)
+
+        if text_input:
+            self.text_input = text_input
+            self.font = font
+            self.base_color = base_color
+            self.hovering_color = hovering_color
+            self.text = self.font.render(self.text_input, True, self.base_color)
+            self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+        else:
+            self.text = None
+
         self.image_index = 0
         self.is_hovering = False
         self.is_pressed = False
         self.rect = self.images[self.image_index].get_rect(center=(self.x_pos, self.y_pos))
-        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
     def setPos(self, pos):
         self.x_pos = pos[0]
@@ -28,7 +33,8 @@ class Button:
 
     def update(self, screen):
         screen.blit(self.images[self.image_index], self.rect)
-        screen.blit(self.text, self.text_rect)
+        if self.text:
+            screen.blit(self.text, self.text_rect)
 
     def checkForInput(self, position):
         if self.rect.collidepoint(position):
@@ -39,10 +45,11 @@ class Button:
             return False
 
     def changeColor(self, position):
-        if self.rect.collidepoint(position):
-            self.text = self.font.render(self.text_input, True, self.hovering_color)
-        else:
-            self.text = self.font.render(self.text_input, True, self.base_color)
+        if self.text :
+            if self.rect.collidepoint(position):
+                self.text = self.font.render(self.text_input, True, self.hovering_color)
+            else:
+                self.text = self.font.render(self.text_input, True, self.base_color)
 
     def press(self, screen):
         if self.is_pressed:

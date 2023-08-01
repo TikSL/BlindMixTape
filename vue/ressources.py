@@ -7,7 +7,8 @@ background = "assets/windows/Window_10.png"
 nunitoRegular = "assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "assets/bubble3D.ttf"
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-
+screen_width = 1280
+screen_height = 720
 
 def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à la taille désirée
     return pygame.font.Font(font, size)
@@ -17,6 +18,7 @@ largeurBoutons = screen_width * 0.039
 hauteurBoutons = screen_height * 0.069
 # Menu Principal
 
+menuLogo = pygame.image.load("assets/logo.png")
 menuGIF = [pygame.transform.scale(pygame.image.load(f"assets/GIF_dance/frame_{i}_delay-0.08s.gif"),
                                   (0.195 * screen_width, 0.374 * screen_height)) for i in range(18)]
 menuPlayButton = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_14.png"),
@@ -33,6 +35,8 @@ lobbyWindowOption2 = pygame.transform.scale(pygame.image.load("assets/windows/Wi
 lobbyIconPlayers = pygame.transform.scale(pygame.image.load("assets/buttons/Button_98.png"),
                                           (0.072 * screen_width, 0.123 * screen_height))
 lobbyIconDifficulty = pygame.transform.scale(pygame.image.load("assets/buttons/Button_29.png"),
+                                             (0.072 * screen_width, 0.123 * screen_height))
+lobbyIconRounds = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_01.png"),
                                              (0.072 * screen_width, 0.123 * screen_height))
 
 lobbyButtonPlus = [
@@ -76,4 +80,8 @@ lobbySoundOn = [
     pygame.transform.scale(pygame.image.load("assets/buttons/SoundOn/SoundOn_3.png"), (largeurBoutons, hauteurBoutons))]
 
 persos = [f"assets/perso/perso_{k}.png" for k in range(1, 21)]
+
 # Play
+
+playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_47.png"), (largeurBoutons, hauteurBoutons))]
+playButtonMuteMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button2_35.png"), (largeurBoutons, hauteurBoutons))]
