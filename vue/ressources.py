@@ -3,12 +3,12 @@ import pygame
 
 pygame.init()
 background = "assets/windows/Window_10.png"
-
 nunitoRegular = "assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "assets/bubble3D.ttf"
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
 screen_width = 1280
 screen_height = 720
+
 
 def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à la taille désirée
     return pygame.font.Font(font, size)
@@ -37,7 +37,7 @@ lobbyIconPlayers = pygame.transform.scale(pygame.image.load("assets/buttons/Butt
 lobbyIconDifficulty = pygame.transform.scale(pygame.image.load("assets/buttons/Button_29.png"),
                                              (0.072 * screen_width, 0.123 * screen_height))
 lobbyIconRounds = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_01.png"),
-                                             (0.072 * screen_width, 0.123 * screen_height))
+                                         (0.072 * screen_width, 0.123 * screen_height))
 
 lobbyButtonPlus = [
     pygame.transform.scale(pygame.image.load("assets/buttons/plus/plus_1.png"), (largeurBoutons, hauteurBoutons)),
@@ -83,8 +83,22 @@ persos = [f"assets/perso/perso_{k}.png" for k in range(1, 21)]
 
 # Play
 
-playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_47.png"), (screen_width*0.07, screen_width*0.07))]
-playButtonMuteMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button2_35.png"), (screen_width*0.07, screen_width*0.07))]
-playButtonMuteTest = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_46.png"), (screen_width*0.07, screen_width*0.07))]
+playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_47.png"),
+                                              (screen_width * 0.07, screen_width * 0.07))]
+playButtonMuteMusic = [pygame.transform.scale(pygame.image.load("assets/buttons/Button2_35.png"),
+                                              (screen_width * 0.07, screen_width * 0.07))]
+playButtonMuteTest = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_46.png"),
+                                             (screen_width * 0.07, screen_width * 0.07))]
 
+# attrib
 
+attributionPointsFond = "assets/windows/Window_28.png"
+attributionPoints = [
+    pygame.transform.scale(pygame.image.load("assets/buttons/attributionpoints/attributionpoints_1.png"),
+                           (0.185 * screen_width, 0.146 * screen_height)),
+    pygame.transform.scale(pygame.image.load("assets/buttons/attributionpoints/attributionpoints_2.png"),
+                           (0.185 * screen_width, 0.146 * screen_height)),
+    pygame.transform.scale(pygame.image.load("assets/buttons/attributionpoints/attributionpoints_3.png"),
+                           (0.185 * screen_width, 0.146 * screen_height))]
+attributionPointsBoutonCroix = [pygame.transform.scale(pygame.image.load("assets/buttons/Button_23.png"),
+                                                       (0.040 * screen_width, 0.070 * screen_height))]

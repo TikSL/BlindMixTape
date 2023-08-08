@@ -1,3 +1,5 @@
+from math import ceil
+
 import pygame
 import sys
 from pygame import mixer, time, USEREVENT
@@ -24,7 +26,8 @@ pygame.display.set_caption("BlindMixTape")
 # Charger l'image de fond en utilisant les dimensions de l'écran
 background = pygame.transform.scale(pygame.image.load(ressources.background), (screen_width, screen_height))
 volume_bar = VolumeBar(screen_width * 0.805, screen_height * 0.884, screen_width * 0.130, screen_height * 0.035)
-
+fond_attribution = pygame.transform.scale(pygame.image.load(ressources.attributionPointsFond),
+                                          (screen_width * 0.96, (16 / 17) * screen_height))
 listeVignettes = []
 listeJoueurs = []
 
@@ -39,7 +42,6 @@ def playAlignementJoueursBas(nbrVignettes):
         vignette.setPos((position_x, screen_height - 0.24 * screen_height))
 
 
-
 def playListening():
     global listeVignettes
     global listeJoueurs
@@ -49,7 +51,7 @@ def playListening():
     playButtonMusic = Button(
         images=ressources.playButtonPlayMusic,
         pos=(screen_width * 0.5, screen_height * 0.1),
-        text_input=None, font=None, base_color=None, hovering_color = None)
+        text_input=None, font=None, base_color=None, hovering_color=None)
     playSoundOn = True
 
     playButtonBack = Button(
@@ -82,8 +84,8 @@ def playListening():
 
         pygame.display.update()
 
-def playPause():
 
+def playPause():
     playButtonMusic = Button(
         images=ressources.playButtonMuteMusic,
         pos=(screen_width * 0.5, screen_height * 0.1),
@@ -94,7 +96,6 @@ def playPause():
         images=ressources.playButtonMuteMusic,
         pos=(screen_width * 0.5, screen_height * 0.5),
         text_input=None, font=None, base_color=None, hovering_color=None)
-
 
     while True:
         screen.blit(background, (0, 0))
@@ -215,7 +216,6 @@ def lobby():
             center=(ressources.screen_width * 0.293, ressources.screen_height * 0.324))
         screen.blit(lobbyDataNombreJoueurs, lobbyDataNombreJoueurs_Rect)
 
-
         # Option difficulté
         screen.blit(ressources.lobbyWindowOption2, (ressources.screen_width * 0.117, ressources.screen_height * 0.428))
         screen.blit(ressources.lobbyIconDifficulty, (ressources.screen_width * 0.124, ressources.screen_height * 0.446))
@@ -296,9 +296,9 @@ def lobby():
                     if len(listeVignettes) < 9:
                         lobbyOptionButtonNbrJoueursPlus.press(screen)
                         nouvelle_vignette = VignetteJoueur(ressources.screen_width * 0.586 + (
-                                    len(listeVignettes) % 3) * ressources.screen_width * 0.111,
+                                len(listeVignettes) % 3) * ressources.screen_width * 0.111,
                                                            ressources.screen_height * 0.145 + (
-                                                                       len(listeVignettes) // 3) * ressources.screen_height * 0.231)
+                                                                   len(listeVignettes) // 3) * ressources.screen_height * 0.231)
                         listeVignettes.append(nouvelle_vignette)
 
                 if lobbyOptionButtonNbrJoueursMoins.checkForInput(lobbyMousePosition):
@@ -387,6 +387,92 @@ def main_menu():
                 pygame.display.update()
 
             volume_bar.handle_event(event, mousePosition=menuMousePosition, screen=screen)
+
+
+def attributionPointsAlignementJoueursMotif(nbrVignettes):
+    nbrVignettesHaut = ceil(nbrVignettes//2)
+    nbrVignettesBas = nbrVignettes - nbrVignettesHaut
+
+
+    ecartVignettesHaut = (screen_width - nbrVignettesHaut * 0.097 * screen_width)/(nbrVignettesHaut+1)
+    ecartVignettesBas = (screen_width - nbrVignettesBas * 0.097 * screen_width)/(nbrVignettesBas+1)
+
+    for i, vignette in enumerate(listeVignettes):
+        if i <= nbrVignettesHaut - 1:
+            vignette.setPos(((0.097 * screen_width) * i + ecartVignettesHaut*(i+1), 100))
+        else:
+            vignette.setPos(((0.097 * screen_width) * (i-nbrVignettesHaut) + ecartVignettesBas * (i-nbrVignettesHaut + 1), 300))
+
+
+
+# Exemple d'utilisation :
+# Supposons que vous ayez une liste de vignettes "listeVignettes" et que vous souhaitez afficher 7 vignettes.
+# Vous pouvez appeler la fonction comme suit :
+# attributionPointsAlignementJoueursMotif(7)
+
+
+
+
+
+
+
+
+
+def attribution_points():
+    attributionPointsTitre = Button(images=ressources.attributionPoints,
+                                    pos=(screen_width * (3 / 12), screen_height * 0.880),
+                                    text_input="Titre",
+                                    font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.035)),
+                                    base_color="White",
+                                    hovering_color="#CC191C")
+
+    attributionPointsGroupe = Button(images=ressources.attributionPoints,
+                                     pos=(screen_width * (6 / 12), screen_height * 0.880),
+                                     text_input="Groupe",
+                                     font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.035)),
+                                     base_color="White",
+                                     hovering_color="#CC191C")
+
+    attributionPointsTitreEtGroupe = Button(images=ressources.attributionPoints,
+                                            pos=(screen_width * (9 / 12), screen_height * 0.880),
+                                            text_input="Titre+Groupe",
+                                            font=ressources.get_font(ressources.nunitoRegular,
+                                                                     round(screen_width * 0.026)),
+                                            base_color="White",
+                                            hovering_color="#CC191C")
+
+    attributionPointsCroix = Button(images=ressources.attributionPointsBoutonCroix,
+                                    pos=(screen_width * 0.92, screen_height * (1 / 8)),
+                                    text_input=None, font=None, base_color=None, hovering_color=None)
+    attributionPointsAlignementJoueursMotif(len(listeVignettes))
+    while True:
+        screen.blit(fond_attribution, (screen_width * 0.02, (1 / 25) * screen_height))
+        menuMousePosition = pygame.mouse.get_pos()
+
+        for i, vignette in enumerate(listeVignettes):
+            vignette.afficher(screen)
+        for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre,
+                       attributionPointsCroix]:
+            button.changeColor(menuMousePosition)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if attributionPointsGroupe.checkForInput(menuMousePosition):
+                    attributionPointsGroupe.press(screen)
+                    playListening()
+                if attributionPointsTitre.checkForInput(menuMousePosition):
+                    attributionPointsTitre.press(screen)
+                    playListening()
+                if attributionPointsTitreEtGroupe.checkForInput(menuMousePosition):
+                    attributionPointsTitreEtGroupe.press(screen)
+                    playListening()
+                if attributionPointsCroix.checkForInput(menuMousePosition):
+                    playPause()
+        pygame.display.update()
 
 
 mixer.music.unload()
