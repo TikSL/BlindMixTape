@@ -424,14 +424,14 @@ def attribution_points():
                                     text_input="Titre",
                                     font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.035)),
                                     base_color="White",
-                                    hovering_color="#CC191C")
+                                    hovering_color="#2F6DC7")
 
     attributionPointsGroupe = Button(images=ressources.attributionPoints,
                                      pos=(screen_width * (6 / 12), screen_height * 0.880),
                                      text_input="Groupe",
                                      font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.035)),
                                      base_color="White",
-                                     hovering_color="#CC191C")
+                                     hovering_color="#2F6DC7")
 
     attributionPointsTitreEtGroupe = Button(images=ressources.attributionPoints,
                                             pos=(screen_width * (9 / 12), screen_height * 0.880),
@@ -439,7 +439,7 @@ def attribution_points():
                                             font=ressources.get_font(ressources.nunitoRegular,
                                                                      round(screen_width * 0.026)),
                                             base_color="White",
-                                            hovering_color="#CC191C")
+                                            hovering_color="#2F6DC7")
 
     attributionPointsCroix = Button(images=ressources.attributionPointsBoutonCroix,
                                     pos=(screen_width * 0.92, screen_height * (1 / 8)),
