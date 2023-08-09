@@ -477,7 +477,7 @@ def attribution_points():
 
 mixer.music.unload()
 mixer.music.load("assets/AC theme.mp3")
-mixer.music.set_volume(0.5)
+mixer.music.set_volume(0)
 time.set_timer(USEREVENT, 80)
 
 main_menu()
