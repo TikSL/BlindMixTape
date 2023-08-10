@@ -17,10 +17,8 @@ class Mixtape:
         liste_sons = playlist.get_tracks()
         self.mixtape = random.sample(set(liste_sons), k = 6)
         self.listeATrouver = []
-        id = 0
-        for s in self.mixtape:
+        for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-            id += 1
         self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()

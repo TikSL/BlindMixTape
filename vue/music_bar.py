@@ -18,7 +18,7 @@ class MusicBar:
         self.play_button = Button(
             images=ressources.playButtonPlayMusic,
             pos=(x, y),
-            text_input=" ", font=ressources.get_font(ressources.nunitoRegular, round(0.179*ressources.screen_height)), base_color="White", hovering_color="Green")
+            text_input=" ", font=ressources.get_font(ressources.nunitoRegular, round(0.179 * ressources.screen_height)), base_color="White", hovering_color="Green")
 
     def update(self, elapsed_time, screen):
         if self.is_playing:

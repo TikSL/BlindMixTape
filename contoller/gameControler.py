@@ -7,7 +7,6 @@ from pygame import mixer, time, USEREVENT
 import player
 import ressources
 from button import Button
-from music_bar import MusicBar
 from vignette_joueur import VignetteJoueur
 from volume_bar import VolumeBar
 
@@ -18,18 +17,19 @@ screen_width = 1280
 screen_height = 720
 print(screen_width, screen_height)
 
-# Définir la taille de la fenêtre en utilisant les dimensions de l'écran
+
 screen = pygame.display.set_mode((screen_width, screen_height))
-# screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+
 pygame.display.set_caption("BlindMixTape")
 
-# Charger l'image de fond en utilisant les dimensions de l'écran
+
 background = pygame.transform.scale(pygame.image.load(ressources.background), (screen_width, screen_height))
 volume_bar = VolumeBar(screen_width * 0.805, screen_height * 0.884, screen_width * 0.130, screen_height * 0.035)
 fond_attribution = pygame.transform.scale(pygame.image.load(ressources.attributionPointsFond),
                                           (screen_width * 0.96, (16 / 17) * screen_height))
 listeVignettes = []
 listeJoueurs = []
+listeMusiques = []
 
 
 def playAlignementJoueursBas(nbrVignettes):
@@ -410,14 +410,6 @@ def attributionPointsAlignementJoueursMotif(nbrVignettes):
 # Vous pouvez appeler la fonction comme suit :
 # attributionPointsAlignementJoueursMotif(7)
 
-
-
-
-
-
-
-
-
 def attribution_points():
     attributionPointsTitre = Button(images=ressources.attributionPoints,
                                     pos=(screen_width * (3 / 12), screen_height * 0.880),
@@ -476,8 +468,6 @@ def attribution_points():
 
 
 mixer.music.unload()
-mixer.music.load("assets/AC theme.mp3")
+mixer.music.load("vue/assets/AC theme.mp3")
 mixer.music.set_volume(0)
 time.set_timer(USEREVENT, 80)
-
-main_menu()

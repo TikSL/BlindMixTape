@@ -1,8 +1,7 @@
 import pygame
-import sys
 
 import button
-from vue import ressources
+import ressources
 
 
 class VolumeBar:
@@ -18,11 +17,11 @@ class VolumeBar:
         self.is_dragging = False
 
         # Charger les images de la barre de volume (vous pouvez les remplacer par vos images)
-        self.volume_fill = pygame.transform.scale(pygame.image.load("assets/windows/Window_66.png"), (self.width, self.height))
-        self.volume_bar = pygame.transform.scale(pygame.image.load("assets/windows/Window_65.png"), (self.width, self.height))
+        self.volume_fill = pygame.transform.scale(pygame.image.load("vue/assets/windows/Window_66.png"), (self.width, self.height))
+        self.volume_bar = pygame.transform.scale(pygame.image.load("vue/assets/windows/Window_65.png"), (self.width, self.height))
         #self.volume_icon = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_25.png"), (self.height*2, self.height*2))
         self.volumeButton = button.Button(
-            images=ressources.lobbySoundOn, pos=(self.x - 32, self.y +15),
+            images=ressources.lobbySoundOn, pos=(self.x - 32, self.y + 15),
             text_input=" ", font=ressources.get_font(ressources.nunitoRegular, 70),
             base_color="White",
             hovering_color="#6DC300"
