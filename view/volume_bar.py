@@ -17,8 +17,8 @@ class VolumeBar:
         self.is_dragging = False
 
         # Charger les images de la barre de volume (vous pouvez les remplacer par vos images)
-        self.volume_fill = pygame.transform.scale(pygame.image.load("vue/assets/windows/Window_66.png"), (self.width, self.height))
-        self.volume_bar = pygame.transform.scale(pygame.image.load("vue/assets/windows/Window_65.png"), (self.width, self.height))
+        self.volume_fill = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_66.png"), (self.width, self.height))
+        self.volume_bar = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_65.png"), (self.width, self.height))
         #self.volume_icon = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_25.png"), (self.height*2, self.height*2))
         self.volumeButton = button.Button(
             images=ressources.lobbySoundOn, pos=(self.x - 32, self.y + 15),

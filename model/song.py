@@ -37,16 +37,16 @@ class Song:
 
     def dl(self):
         audio_stream = Search(f"{self.artist} {self.title}").results[0].streams.filter(only_audio=True).first()
-        audio_stream.download(filename=f"partie/{self.id}.mp4")
+        audio_stream.download(filename=f"game/{self.id}.mp4")
         print(f"Son {self.id} téléchargé")
 
     def setAudioLevel(self):
-        audio = AudioSegment.from_file(f"partie/{self.id}.mp4", format="mp4")
+        audio = AudioSegment.from_file(f"game/{self.id}.mp4", format="mp4")
         normalizedAudio = audio.apply_gain(-audio.dBFS)
-        normalizedAudio.export(f"partie/{self.id}.mp4", format="mp4")
+        normalizedAudio.export(f"game/{self.id}.mp4", format="mp4")
 
     def cut(self, duration):
-        audio = AudioSegment.from_file("../partie/0.mp4", format="mp4")
+        audio = AudioSegment.from_file("../game/0.mp4", format="mp4")
         extracted_audio = audio[:duration * 1000]  # en ms
-        extracted_audio.export(f"partie/{self.id}.mp4", format="mp4")
+        extracted_audio.export(f"game/{self.id}.mp4", format="mp4")
 

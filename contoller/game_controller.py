@@ -468,6 +468,6 @@ def attribution_points():
 
 
 mixer.music.unload()
-mixer.music.load("vue/assets/AC theme.mp3")
+mixer.music.load("view/assets/AC theme.mp3")
 mixer.music.set_volume(0)
 time.set_timer(USEREVENT, 80)

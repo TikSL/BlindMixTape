@@ -11,7 +11,7 @@ ffplay.exe
 ffprobe.exe
 
 test.py
-/partie/
+/game/
 /__pycache__/*
 */__pycache__/*
 \__pycache__\ressources.cpython-310.pyc

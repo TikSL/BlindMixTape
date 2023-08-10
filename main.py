@@ -1,6 +1,6 @@
-import gameControler
+import game_controller
 
 if __name__ == "__main__":
 
-    gameControler.main_menu()
+    game_controller.main_menu()
     
