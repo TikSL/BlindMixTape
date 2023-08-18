@@ -1,6 +1,5 @@
 import pygame
 
-
 class Button:
     def __init__(self, images, pos, text_input, font, base_color, hovering_color):
         self.images = images

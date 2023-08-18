@@ -1,12 +1,13 @@
 class gameConfig:
 
     def __init__(self):
-        self.difficulty = None
+        self.difficulty = 0
         self.numPlayers = 2
         self.numRounds = 3
         self.currentRound = 0
+        self.listVignettes = []
         self.listPlayers = []
-        self.listMusics = []
+        self.listMixtapes = []
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
@@ -18,12 +19,12 @@ class gameConfig:
         self.numRounds = num_rounds
 
     def dspInfos(self):
-        print(f"GAME CONFIG INFORMATION :"
-              f"Difficulty : {self.difficulty}"
-              f"Num. players : {self.numPlayers}"
-              f"Num. rounds : {self.numRounds}"
+        print(f"GAME CONFIG INFORMATION :\n"
+              f"Difficulty : {self.difficulty}\n"
+              f"Num. players : {self.numPlayers}\n"
+              f"Num. rounds : {self.numRounds}\n"
               f"Currend round : {self.currentRound}")
         for player in self.listPlayers:
             player.dspInfos()
-        for music in self.listMusics:
-            music.dspInfos()
+        for mixtape in self.listMixtapes:
+            mixtape.dspInfos()
