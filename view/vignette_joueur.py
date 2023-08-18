@@ -32,6 +32,8 @@ class VignetteJoueur:
             hovering_color="#6DC300")
         self.selected = False
         self.border_color = (0, 255, 0)
+        self.score = None
+        self.scoreRect = None
 
     def __update__(self):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
@@ -41,6 +43,9 @@ class VignetteJoueur:
         self.text.setPos(pos=(self.x, self.y + (0.179 * ressources.screen_height)))
         self.personnage_image.setPos(pos=(self.x + (0.045 * ressources.screen_width), self.y +
                                           (0.093 * ressources.screen_height)))
+        if self.score:
+            self.scoreRect = self.score.get_rect(center=(self.x + (0.094 * ressources.screen_width), self.y +
+                                        (0.003 * ressources.screen_height)))
 
     def afficher(self, screen):
         screen.blit(self.image, self.rect)
@@ -51,6 +56,8 @@ class VignetteJoueur:
             self.icon_croix.update(screen)
         if self.selected:
             pygame.draw.rect(screen, self.border_color, self.rect, 4)
+        if self.score:
+            screen.blit(self.score, self.scoreRect)
 
 
     def realigner(self, k):
@@ -73,4 +80,15 @@ class VignetteJoueur:
         self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) - 1) % 20]
         self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso),
                                                                 (0.065 * ressources.screen_width, 0.116 * ressources.screen_height))])
+        self.__update__()
+
+    def setScore(self, score):
+        if score is not None:
+            self.score = ressources.get_font(ressources.blomberg,
+                                                   round(ressources.screen_height * 0.08)).render(
+                str(score),
+                True,
+                "Firebrick")
+        else:
+            self.score = None
         self.__update__()

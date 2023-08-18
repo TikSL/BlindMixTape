@@ -4,7 +4,7 @@ import pygame
 import sys
 from pygame import mixer, time, USEREVENT
 
-import player
+from player import Player
 import ressources
 from button import Button
 from game_config import gameConfig
@@ -285,8 +285,6 @@ class GameState:
                     self.state = "main_menu"
 
                 if lobbyButtonPlay.checkForInput(lobbyMousePosition):
-                    for vignette in self.gameConf.listVignettes:
-                        self.gameConf.listPlayers.append(player.Player(vignette.text))
                     self.state = "to_round"
 
                 if lobbyOptionButtonNbrJoueursPlus.checkForInput(lobbyMousePosition):
@@ -329,6 +327,11 @@ class GameState:
 
     def toRound(self):
         self.gameConf.currentRound += 1
+        for vignette in self.gameConf.listVignettes:
+
+            self.gameConf.listPlayers.append(Player(vignette.text, vignette))
+        for player in self.gameConf.listPlayers:
+            player.vignette.setScore(player.score)
         # self.gameConf.listMixtapes.append(Mixtape())
         # self.gameConf.dspInfos()
         self.state = "round_play"
@@ -348,13 +351,33 @@ class GameState:
             pos=(screen_width * 0.948, screen_height * 0.08),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
+        button_positions = [
+            (screen_width * 0.10, screen_height * 0.30),
+            (screen_width * 0.40, screen_height * 0.30),
+            (screen_width * 0.70, screen_height * 0.30),
+            (screen_width * 0.10, screen_height * 0.55),
+            (screen_width * 0.40, screen_height * 0.55),
+            (screen_width * 0.70, screen_height * 0.55)
+        ]
+
+        playListButtonCover = []
+        for id, position in enumerate(button_positions):
+            playListButtonCover.append(
+                Button(
+                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"),
+                                                   (0.12 * screen_width, 0.12 * screen_width))],
+                    pos=position,
+                    text_input=None, font=None, base_color=None, hovering_color=None
+                )
+            )
+
 
         screen.blit(background, (0, 0))
         playMousePosition = pygame.mouse.get_pos()
         for i, vignette in enumerate(self.gameConf.listVignettes):
             vignette.afficher(screen)
 
-        for button in [playButtonBack, playButtonMusic]:
+        for button in [playButtonBack, playButtonMusic] + playListButtonCover:
             button.update(screen)
 
         for event in pygame.event.get():
@@ -383,18 +406,18 @@ class GameState:
 
         playListButtonCover = []
         button_positions = [
-            (screen_width * 0.15, screen_height * 0.30),
-            (screen_width * 0.48, screen_height * 0.30),
-            (screen_width * 0.81, screen_height * 0.30),
-            (screen_width * 0.15, screen_height * 0.70),
-            (screen_width * 0.48, screen_height * 0.70),
-            (screen_width * 0.81, screen_height * 0.70)
+            (screen_width * 0.10, screen_height * 0.30),
+            (screen_width * 0.40, screen_height * 0.30),
+            (screen_width * 0.70, screen_height * 0.30),
+            (screen_width * 0.10, screen_height * 0.70),
+            (screen_width * 0.40, screen_height * 0.70),
+            (screen_width * 0.70, screen_height * 0.70)
         ]
 
         for id, position in enumerate(button_positions):
             playListButtonCover.append(
                 Button(
-                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"), (0.185 * screen_width, 0.146 * screen_width))],
+                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"), (0.146 * screen_width, 0.146 * screen_width))],
                     pos=position,
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
@@ -471,17 +494,26 @@ class GameState:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.gameConf.joueurSelectionne:
-                    if attributionPointsGroupe.checkForInput(menuMousePosition):
-                        attributionPointsGroupe.press(screen)
-                        self.state = "round_play"
-                    if attributionPointsTitre.checkForInput(menuMousePosition):
-                        attributionPointsTitre.press(screen)
-                        self.state = "round_play"
-                    if attributionPointsTitreEtGroupe.checkForInput(menuMousePosition):
-                        attributionPointsTitreEtGroupe.press(screen)
-                        self.state = "round_play"
+
+                    for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre]:
+
+                        if button.checkForInput(menuMousePosition):
+                            button.press(screen)
+                            for vignette in self.gameConf.listVignettes:
+                                vignette.selected = False
+                            for player in self.gameConf.listPlayers:
+                                if player.name == self.gameConf.joueurSelectionne:
+                                    if button == attributionPointsTitreEtGroupe:
+                                        player.score += 3
+                                    else:
+                                        player.score += 1
+                                    player.vignette.setScore(player.score)
+                            self.gameConf.joueurSelectionne = None
+                            self.state = "round_play"
+
                 if attributionPointsCroix.checkForInput(menuMousePosition):
                     self.state = "round_paused"
+
                 for vignette in self.gameConf.listVignettes:
                     if vignette.personnage_image.checkForInput(menuMousePosition):
                         if vignette.rect.collidepoint(menuMousePosition):

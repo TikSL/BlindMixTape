@@ -5,6 +5,7 @@ pygame.init()
 background = "view/assets/windows/Window_10.png"
 nunitoRegular = "view/assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "view/assets/bubble3D.ttf"
+blomberg = "view/assets/blomberg/Blomberg.otf"
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
 screen_width = 1280
 screen_height = 720
