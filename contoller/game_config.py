@@ -8,6 +8,7 @@ class gameConfig:
         self.listVignettes = []
         self.listPlayers = []
         self.listMixtapes = []
+        self.joueurSelectionne = None
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty

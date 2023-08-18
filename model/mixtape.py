@@ -1,5 +1,7 @@
 import random
 import difflib
+
+import requests
 from pydub import AudioSegment
 from pygame import mixer
 
@@ -8,6 +10,15 @@ import deezer
 
 
 class Mixtape:
+
+    def download_image(self, url, destination):
+        response = requests.get(url)
+        if response.status_code == 200:
+            with open(destination, "wb") as file:
+                file.write(response.content)
+            print("Image téléchargée avec succès.")
+        else:
+            print("Échec du téléchargement de l'image.")
 
     def __init__(self):
 
@@ -19,15 +30,16 @@ class Mixtape:
         self.listeATrouver = []
         for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-        self.dl()
+            # self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
+
+        # self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()
         # self.normaliserAudio()
-        self.mixer()
+        # self.mixer()
         print("CREATION MIXTAPE Mixage OK")
 
     def infos(self):
-
         for song in self.listeATrouver:
             song.dspInfo()
 

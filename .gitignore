@@ -16,4 +16,6 @@ test.py
 */__pycache__/*
 \__pycache__\ressources.cpython-310.pyc
 
+/partie/
+
 

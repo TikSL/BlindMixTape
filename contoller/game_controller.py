@@ -329,8 +329,8 @@ class GameState:
 
     def toRound(self):
         self.gameConf.currentRound += 1
-        self.gameConf.listMixtapes.append(Mixtape())
-        self.gameConf.dspInfos()
+        # self.gameConf.listMixtapes.append(Mixtape())
+        # self.gameConf.dspInfos()
         self.state = "round_play"
 
     def roundListening(self):
@@ -381,16 +381,31 @@ class GameState:
             text_input=None, font=None, base_color=None, hovering_color=None)
         playSoundOn = True
 
-        playButtonTest = Button(
-            images=ressources.playButtonMuteMusic,
-            pos=(screen_width * 0.5, screen_height * 0.5),
-            text_input=None, font=None, base_color=None, hovering_color=None)
+        playListButtonCover = []
+        button_positions = [
+            (screen_width * 0.15, screen_height * 0.30),
+            (screen_width * 0.48, screen_height * 0.30),
+            (screen_width * 0.81, screen_height * 0.30),
+            (screen_width * 0.15, screen_height * 0.70),
+            (screen_width * 0.48, screen_height * 0.70),
+            (screen_width * 0.81, screen_height * 0.70)
+        ]
+
+        for id, position in enumerate(button_positions):
+            playListButtonCover.append(
+                Button(
+                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"), (0.185 * screen_width, 0.146 * screen_width))],
+                    pos=position,
+                    text_input=None, font=None, base_color=None, hovering_color=None
+                )
+            )
+
 
 
         screen.blit(background, (0, 0))
         playMousePosition = pygame.mouse.get_pos()
 
-        for button in [playButtonMusic, playButtonTest]:
+        for button in [playButtonMusic] + playListButtonCover:
             button.update(screen)
 
         for event in pygame.event.get():
@@ -403,9 +418,9 @@ class GameState:
                         playButtonMusic.setImages(ressources.playButtonMuteMusic)
                         pygame.mixer.music.unpause()
                         self.state = "round_play"
-
-                if playButtonTest.checkForInput(playMousePosition):
-                    self.state = "round_attrib"
+                for id, button in enumerate(playListButtonCover):
+                    if button.checkForInput(playMousePosition):
+                        self.state = "round_attrib"
 
 
         pygame.display.flip()
@@ -446,7 +461,8 @@ class GameState:
             vignette.afficher(screen)
         for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre,
                        attributionPointsCroix]:
-            button.changeColor(menuMousePosition)
+            if self.gameConf.joueurSelectionne:
+                button.changeColor(menuMousePosition)
             button.update(screen)
 
         for event in pygame.event.get():
@@ -454,17 +470,30 @@ class GameState:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if attributionPointsGroupe.checkForInput(menuMousePosition):
-                    attributionPointsGroupe.press(screen)
-                    self.state = "round_play"
-                if attributionPointsTitre.checkForInput(menuMousePosition):
-                    attributionPointsTitre.press(screen)
-                    self.state = "round_play"
-                if attributionPointsTitreEtGroupe.checkForInput(menuMousePosition):
-                    attributionPointsTitreEtGroupe.press(screen)
-                    self.state = "round_play"
+                if self.gameConf.joueurSelectionne:
+                    if attributionPointsGroupe.checkForInput(menuMousePosition):
+                        attributionPointsGroupe.press(screen)
+                        self.state = "round_play"
+                    if attributionPointsTitre.checkForInput(menuMousePosition):
+                        attributionPointsTitre.press(screen)
+                        self.state = "round_play"
+                    if attributionPointsTitreEtGroupe.checkForInput(menuMousePosition):
+                        attributionPointsTitreEtGroupe.press(screen)
+                        self.state = "round_play"
                 if attributionPointsCroix.checkForInput(menuMousePosition):
                     self.state = "round_paused"
+                for vignette in self.gameConf.listVignettes:
+                    if vignette.personnage_image.checkForInput(menuMousePosition):
+                        if vignette.rect.collidepoint(menuMousePosition):
+                            for other_vignette in self.gameConf.listVignettes:
+                                if other_vignette != vignette:
+                                    other_vignette.selected = False
+                            vignette.selected = not vignette.selected
+                            if self.gameConf.joueurSelectionne == vignette.text:
+                                self.gameConf.joueurSelectionne = None
+                            else:
+                                self.gameConf.joueurSelectionne = vignette.text
+
         pygame.display.flip()
 
     def interRounds(self):

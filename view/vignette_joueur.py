@@ -30,6 +30,8 @@ class VignetteJoueur:
             font=ressources.get_font(ressources.nunitoRegular, 10),
             base_color="White",
             hovering_color="#6DC300")
+        self.selected = False
+        self.border_color = (0, 255, 0)
 
     def __update__(self):
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
@@ -47,6 +49,8 @@ class VignetteJoueur:
         self.personnage_image.update(screen)
         if self.icon_croix:
             self.icon_croix.update(screen)
+        if self.selected:
+            pygame.draw.rect(screen, self.border_color, self.rect, 4)
 
 
     def realigner(self, k):
