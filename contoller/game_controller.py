@@ -24,7 +24,7 @@ class GameState:
         self.gameConf = gameConfig()
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0.1)
+        mixer.music.set_volume(0.5)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
 
@@ -332,7 +332,7 @@ class GameState:
             self.gameConf.listPlayers.append(Player(vignette.text, vignette))
         for player in self.gameConf.listPlayers:
             player.vignette.setScore(player.score)
-        # self.gameConf.listMixtapes.append(Mixtape())
+        self.gameConf.listMixtapes.append(Mixtape())
         # self.gameConf.dspInfos()
         self.state = "round_play"
 
@@ -361,6 +361,8 @@ class GameState:
         ]
 
         playListButtonCover = []
+        playListTitles = []
+        playListArtists = []
         for id, position in enumerate(button_positions):
             playListButtonCover.append(
                 Button(
@@ -370,6 +372,18 @@ class GameState:
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
+        for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver):
+            left = button_positions[id][0] + 0.09 * screen_width
+            playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
+                song.title, True, "black")
+            playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * screen_width)
+
+            playArtistSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
+                song.artist, True, "black")
+            playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * screen_width)
+
+            playListTitles.append((playTitreSon, playTitreSon_Rect))
+            playListArtists.append((playArtistSon, playArtistSon_Rect))
 
 
         screen.blit(background, (0, 0))
@@ -379,6 +393,9 @@ class GameState:
 
         for button in [playButtonBack, playButtonMusic] + playListButtonCover:
             button.update(screen)
+
+        for infos in playListArtists + playListTitles:
+            screen.blit(infos[0], infos[1])
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -405,13 +422,15 @@ class GameState:
         playSoundOn = True
 
         playListButtonCover = []
+        playListTitles = []
+        playListArtists = []
         button_positions = [
-            (screen_width * 0.10, screen_height * 0.30),
-            (screen_width * 0.40, screen_height * 0.30),
-            (screen_width * 0.70, screen_height * 0.30),
-            (screen_width * 0.10, screen_height * 0.70),
-            (screen_width * 0.40, screen_height * 0.70),
-            (screen_width * 0.70, screen_height * 0.70)
+            (screen_width * 0.10, screen_height * 0.35),
+            (screen_width * 0.42, screen_height * 0.35),
+            (screen_width * 0.74, screen_height * 0.35),
+            (screen_width * 0.10, screen_height * 0.75),
+            (screen_width * 0.42, screen_height * 0.75),
+            (screen_width * 0.74, screen_height * 0.75)
         ]
 
         for id, position in enumerate(button_positions):
@@ -422,7 +441,18 @@ class GameState:
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
+        for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver):
+            left = button_positions[id][0] + 0.09 * screen_width
+            playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
+                song.title, True, "black")
+            playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * screen_width)
 
+            playArtistSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
+                song.artist, True, "black")
+            playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * screen_width)
+
+            playListTitles.append((playTitreSon, playTitreSon_Rect))
+            playListArtists.append((playArtistSon, playArtistSon_Rect))
 
 
         screen.blit(background, (0, 0))
@@ -430,6 +460,9 @@ class GameState:
 
         for button in [playButtonMusic] + playListButtonCover:
             button.update(screen)
+
+        for info in playListTitles + playListArtists:
+            screen.blit(info[0], info[1])
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

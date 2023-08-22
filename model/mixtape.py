@@ -30,9 +30,9 @@ class Mixtape:
         self.listeATrouver = []
         for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-            # self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
+            self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
 
-        # self.dl()
+        self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()
         # self.normaliserAudio()
