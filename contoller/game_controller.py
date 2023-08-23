@@ -370,9 +370,9 @@ class GameState:
             (screen_width * 0.10, screen_height * 0.30),
             (screen_width * 0.40, screen_height * 0.30),
             (screen_width * 0.70, screen_height * 0.30),
-            (screen_width * 0.10, screen_height * 0.55),
-            (screen_width * 0.40, screen_height * 0.55),
-            (screen_width * 0.70, screen_height * 0.55)
+            (screen_width * 0.10, screen_height * 0.58),
+            (screen_width * 0.40, screen_height * 0.58),
+            (screen_width * 0.70, screen_height * 0.58)
         ]
 
         playListButtonCover = []
@@ -437,6 +437,9 @@ class GameState:
                         # pygame.mixer.music.pause()
                         pygame.mixer.stop()
                         self.state = "round_paused"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.state = "round_paused"
 
         pygame.display.flip()
 
@@ -455,6 +458,7 @@ class GameState:
         playListButtonCover = []
         playListTitles = []
         playListArtists = []
+        playListFounder = []
         button_positions = [
             (screen_width * 0.10, screen_height * 0.35),
             (screen_width * 0.42, screen_height * 0.35),
@@ -473,19 +477,27 @@ class GameState:
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
+            if song.found:
+                playListFounder.append((pygame.transform.scale(pygame.image.load(song.founder.vignette.bufferPerso), (
+                0.065 * ressources.screen_width, 0.116 * ressources.screen_height)), button_positions[song.id]))
 
         for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver):
+            if song.found:
+                color = "grey"
+            else:
+                color = "black"
             left = button_positions[id][0] + 0.09 * screen_width
             playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
-                song.title, True, "black")
+                song.title, True, color)
             playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * screen_width)
 
             playArtistSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
-                song.artist, True, "black")
+                song.artist, True, color)
             playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * screen_width)
 
             playListTitles.append((playTitreSon, playTitreSon_Rect))
             playListArtists.append((playArtistSon, playArtistSon_Rect))
+
 
 
         screen.blit(background, (0, 0))
@@ -494,7 +506,7 @@ class GameState:
         for button in [playButtonMusic] + playListButtonCover:
             button.update(screen)
 
-        for info in playListTitles + playListArtists:
+        for info in playListTitles + playListArtists + playListFounder:
             screen.blit(info[0], info[1])
 
         for event in pygame.event.get():
@@ -511,6 +523,9 @@ class GameState:
                     if button.checkForInput(playMousePosition) and not self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[id].found:
                         self.gameConf.sonSelectionne = id
                         self.state = "round_attrib"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.state = "round_play"
 
         pygame.display.flip()
 
