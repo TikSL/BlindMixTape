@@ -439,16 +439,13 @@ class GameState:
                         self.state = "round_paused"
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.stop()
                     self.state = "round_paused"
 
         pygame.display.flip()
 
     def roundPaused(self):
         self.gameConf.premierPassagePlay = True
-
-        # if self.gameConf.premierPassagePause:
-        #     self.gameConf.premierPassagePause = False
-        #     pygame.mixer.music.stop()
         playButtonMusic = Button(
             images=ressources.playButtonMuteMusic,
             pos=(screen_width * 0.5, screen_height * 0.1),
@@ -525,6 +522,7 @@ class GameState:
                         self.state = "round_attrib"
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.music.unpause()
                     self.state = "round_play"
 
         pygame.display.flip()
