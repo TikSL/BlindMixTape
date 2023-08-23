@@ -28,8 +28,10 @@ class Mixtape:
         liste_sons = playlist.get_tracks()
         self.mixtape = random.sample(set(liste_sons), k = 6)
         self.listeATrouver = []
+        self.listeAMixer = []
         for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
+            self.listeAMixer.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
             self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
 
         # self.dl()
@@ -57,13 +59,13 @@ class Mixtape:
             song.cut(duration)
 
     def mixer(self):
-        self.nomFichierMix = f"partie/mix_{len(self.listeATrouver)}.mp3"
-        sound0 = AudioSegment.from_file(f"partie/{self.listeATrouver[0].id}.mp4", format="mp4")
-        sound1 = AudioSegment.from_file(f"partie/{self.listeATrouver[1].id}.mp4", format="mp4")
+        self.nomFichierMix = f"partie/mix_{len(self.listeAMixer)}.mp3"
+        sound0 = AudioSegment.from_file(f"partie/{self.listeAMixer[0].id}.mp4", format="mp4")
+        sound1 = AudioSegment.from_file(f"partie/{self.listeAMixer[1].id}.mp4", format="mp4")
         overlay = sound0.overlay(sound1, position=0)
-        print(f"Mixage {self.listeATrouver[0].id} OK")
-        print(f"Mixage {self.listeATrouver[1].id} OK")
-        for song in self.listeATrouver[2:]:
+        print(f"Mixage {self.listeAMixer[0].id} OK")
+        print(f"Mixage {self.listeAMixer[1].id} OK")
+        for song in self.listeAMixer[2:]:
             soundn = AudioSegment.from_file(f"partie/{song.id}.mp4", format="mp4")
             overlay = overlay.overlay(soundn, position=0)
             print(f"Mixage {song.id} OK")
