@@ -7,6 +7,7 @@ from pydub import AudioSegment
 def validation(title):
     return title.split("(")[0]
 
+
 class Song:
 
     def __init__(self, title, artist, startTimer, difficulty, id):
