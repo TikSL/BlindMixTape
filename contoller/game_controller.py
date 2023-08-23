@@ -355,9 +355,9 @@ class GameState:
             (screen_width * 0.10, screen_height * 0.30),
             (screen_width * 0.40, screen_height * 0.30),
             (screen_width * 0.70, screen_height * 0.30),
-            (screen_width * 0.10, screen_height * 0.55),
-            (screen_width * 0.40, screen_height * 0.55),
-            (screen_width * 0.70, screen_height * 0.55)
+            (screen_width * 0.10, screen_height * 0.58),
+            (screen_width * 0.40, screen_height * 0.58),
+            (screen_width * 0.70, screen_height * 0.58)
         ]
 
         playListButtonCover = []
@@ -420,6 +420,9 @@ class GameState:
                         playButtonMusic.setImages(ressources.playButtonMuteMusic)
                         pygame.mixer.music.pause()
                         self.state = "round_paused"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.state = "round_paused"
 
         pygame.display.flip()
 
@@ -490,6 +493,9 @@ class GameState:
                     if button.checkForInput(playMousePosition) and not self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[id].found:
                         self.gameConf.sonSelectionne = id
                         self.state = "round_attrib"
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.state = "round_play"
 
         pygame.display.flip()
 
