@@ -24,6 +24,7 @@ class Mixtape:
 
         self.nomFichierMix = None
         client = deezer.Client()
+        playlist = client.get_playlist(11672649764)
         playlist = client.get_playlist(10896810924) #top monde 2022
         liste_sons = playlist.get_tracks()
         self.mixtape = random.sample(set(liste_sons), k = 6)
@@ -36,7 +37,7 @@ class Mixtape:
         self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()
-        # self.normaliserAudio()
+        self.normaliserAudio()
         # self.mixer()
         print("CREATION MIXTAPE Mixage OK")
 
