@@ -16,7 +16,7 @@ from volume_bar import VolumeBar
 # screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
 screen_width = 1280
 screen_height = 720
-print(screen_width, screen_height)
+print(f"Affichage : {screen_width} x {screen_height}")
 
 
 class GameState:
@@ -24,7 +24,7 @@ class GameState:
         self.gameConf = gameConfig()
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0.5)
+        mixer.music.set_volume(0)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
 
@@ -329,11 +329,11 @@ class GameState:
         self.gameConf.currentRound += 1
         for vignette in self.gameConf.listVignettes:
 
-            self.gameConf.listPlayers.append(Player(vignette.text, vignette))
+            self.gameConf.listPlayers.append(Player(vignette.text.text_input, vignette))
         for player in self.gameConf.listPlayers:
             player.vignette.setScore(player.score)
         self.gameConf.listMixtapes.append(Mixtape())
-        # self.gameConf.dspInfos()
+        self.gameConf.dspInfos()
         self.state = "round_play"
 
     def roundListening(self):
@@ -363,23 +363,33 @@ class GameState:
         playListButtonCover = []
         playListTitles = []
         playListArtists = []
-        for id, position in enumerate(button_positions):
+        playListFounder = []
+
+        for song in self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver:
             playListButtonCover.append(
                 Button(
-                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"),
-                                                   (0.12 * screen_width, 0.12 * screen_width))],
-                    pos=position,
+                    images=[pygame.transform.scale(pygame.image.load(song.cover),
+                                                   (0.146 * screen_width, 0.146 * screen_width))],
+                    pos=button_positions[song.id],
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
+            if song.found:
+                playListFounder.append((pygame.transform.scale(pygame.image.load(song.founder.vignette.bufferPerso),(0.065 * ressources.screen_width, 0.116 * ressources.screen_height)),button_positions[song.id]))
+
+
         for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver):
+            if song.found:
+                color = "grey"
+            else:
+                color = "black"
             left = button_positions[id][0] + 0.09 * screen_width
             playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
-                song.title, True, "black")
+                song.title, True, color)
             playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * screen_width)
 
             playArtistSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
-                song.artist, True, "black")
+                song.artist, True, color)
             playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * screen_width)
 
             playListTitles.append((playTitreSon, playTitreSon_Rect))
@@ -394,7 +404,7 @@ class GameState:
         for button in [playButtonBack, playButtonMusic] + playListButtonCover:
             button.update(screen)
 
-        for infos in playListArtists + playListTitles:
+        for infos in playListArtists + playListTitles + playListFounder:
             screen.blit(infos[0], infos[1])
 
         for event in pygame.event.get():
@@ -433,14 +443,16 @@ class GameState:
             (screen_width * 0.74, screen_height * 0.75)
         ]
 
-        for id, position in enumerate(button_positions):
+        for song in self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver:
             playListButtonCover.append(
                 Button(
-                    images=[pygame.transform.scale(pygame.image.load(f"partie/cover_{id}.jpg"), (0.146 * screen_width, 0.146 * screen_width))],
-                    pos=position,
+                    images=[pygame.transform.scale(pygame.image.load(song.cover),
+                                                   (0.146 * screen_width, 0.146 * screen_width))],
+                    pos=button_positions[song.id],
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
+
         for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver):
             left = button_positions[id][0] + 0.09 * screen_width
             playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
@@ -475,9 +487,9 @@ class GameState:
                         pygame.mixer.music.unpause()
                         self.state = "round_play"
                 for id, button in enumerate(playListButtonCover):
-                    if button.checkForInput(playMousePosition):
+                    if button.checkForInput(playMousePosition) and not self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[id].found:
+                        self.gameConf.sonSelectionne = id
                         self.state = "round_attrib"
-
 
         pygame.display.flip()
 
@@ -531,18 +543,27 @@ class GameState:
                     for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre]:
 
                         if button.checkForInput(menuMousePosition):
+
                             button.press(screen)
                             for vignette in self.gameConf.listVignettes:
                                 vignette.selected = False
+
                             for player in self.gameConf.listPlayers:
-                                if player.name == self.gameConf.joueurSelectionne:
+                                if player.name == self.gameConf.joueurSelectionne.text_input:
                                     if button == attributionPointsTitreEtGroupe:
                                         player.score += 3
                                     else:
                                         player.score += 1
+                                    self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[self.gameConf.sonSelectionne].found = True
+                                    self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver[self.gameConf.sonSelectionne].founder = player
+                                    self.gameConf.nbrTrouve += 1
                                     player.vignette.setScore(player.score)
                             self.gameConf.joueurSelectionne = None
-                            self.state = "round_play"
+                            if self.gameConf.nbrTrouve == 6:
+                                self.gameConf.nbrTrouve = 0
+                                self.state = "inter_rounds"
+                            else:
+                                self.state = "round_play"
 
                 if attributionPointsCroix.checkForInput(menuMousePosition):
                     self.state = "round_paused"
