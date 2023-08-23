@@ -22,9 +22,10 @@ print(f"Affichage : {screen_width} x {screen_height}")
 class GameState:
     def __init__(self):
         self.gameConf = gameConfig()
+        mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0)
+        mixer.music.set_volume(0.3)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
 
@@ -53,6 +54,8 @@ class GameState:
 
 
     def main_menu(self):
+
+        self.gameConf.premierPassagePlay = True
         if not mixer.music.get_busy():
             mixer.music.play()
 
@@ -285,6 +288,7 @@ class GameState:
                     self.state = "main_menu"
 
                 if lobbyButtonPlay.checkForInput(lobbyMousePosition):
+                    pygame.mixer.music.stop()
                     self.state = "to_round"
 
                 if lobbyOptionButtonNbrJoueursPlus.checkForInput(lobbyMousePosition):
@@ -339,6 +343,17 @@ class GameState:
     def roundListening(self):
 
         self._playAlignementJoueursBas_(len(self.gameConf.listVignettes))
+
+        if self.gameConf.premierPassagePlay:
+            playSonAJouer = []
+            for song in self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver:
+                if not song.found:
+                    playSonAJouer.append(pygame.mixer.Sound(f"game/{song.id}.mp3"))
+
+            for song in playSonAJouer:
+                song.play()
+            self.gameConf.premierPassagePlay = False
+
 
         playButtonMusic = Button(
             images=ressources.playButtonPlayMusic,
@@ -414,17 +429,23 @@ class GameState:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if playButtonBack.checkForInput(playMousePosition):
                     self.gameConf.listVignettes = []
+                    pygame.mixer.stop()
                     self.state = "main_menu"
                 if playButtonMusic.checkForInput(playMousePosition):
                     if playSoundOn:
                         playButtonMusic.setImages(ressources.playButtonMuteMusic)
-                        pygame.mixer.music.pause()
+                        # pygame.mixer.music.pause()
+                        pygame.mixer.stop()
                         self.state = "round_paused"
 
         pygame.display.flip()
 
     def roundPaused(self):
+        self.gameConf.premierPassagePlay = True
 
+        # if self.gameConf.premierPassagePause:
+        #     self.gameConf.premierPassagePause = False
+        #     pygame.mixer.music.stop()
         playButtonMusic = Button(
             images=ressources.playButtonMuteMusic,
             pos=(screen_width * 0.5, screen_height * 0.1),

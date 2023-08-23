@@ -28,13 +28,12 @@ class Mixtape:
         liste_sons = playlist.get_tracks()
         self.mixtape = random.sample(set(liste_sons), k = 6)
         self.listeATrouver = []
-        self.listeAMixer = []
         for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-            self.listeAMixer.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
+            # self.listeAMixer.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
             self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
 
-        # self.dl()
+        self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()
         # self.normaliserAudio()
@@ -42,7 +41,9 @@ class Mixtape:
         print("CREATION MIXTAPE Mixage OK")
 
     def dspInfos(self):
-        print(f"MIXTAPE INFOS")
+        print(f"---------\n"
+              f"MIXTAPE INFOS\n")
+        print(f"Liste a Trouver : ")
         for song in self.listeATrouver:
             song.dspInfo()
 
@@ -59,17 +60,42 @@ class Mixtape:
             song.cut(duration)
 
     def mixer(self):
-        self.nomFichierMix = f"partie/mix_{len(self.listeAMixer)}.mp3"
-        sound0 = AudioSegment.from_file(f"partie/{self.listeAMixer[0].id}.mp4", format="mp4")
-        sound1 = AudioSegment.from_file(f"partie/{self.listeAMixer[1].id}.mp4", format="mp4")
-        overlay = sound0.overlay(sound1, position=0)
-        print(f"Mixage {self.listeAMixer[0].id} OK")
-        print(f"Mixage {self.listeAMixer[1].id} OK")
-        for song in self.listeAMixer[2:]:
-            soundn = AudioSegment.from_file(f"partie/{song.id}.mp4", format="mp4")
-            overlay = overlay.overlay(soundn, position=0)
-            print(f"Mixage {song.id} OK")
-        overlay.export(self.nomFichierMix, format="mp3")
+        # self.nomFichierMix = f"partie/mix_{len(self.listeATrouver)}.mp3"
+        # sound0 = AudioSegment.from_file(f"partie/{self.listeATrouver[0].id}.mp4", format="mp4")
+        # sound1 = AudioSegment.from_file(f"partie/{self.listeATrouver[1].id}.mp4", format="mp4")
+        # overlay = sound0.overlay(sound1, position=0)
+        # print(f"Mixage {self.listeATrouver[0].id} OK")
+        # print(f"Mixage {self.listeATrouver[1].id} OK")
+        # for song in self.listeATrouver[2:]:
+        #     soundn = AudioSegment.from_file(f"partie/{song.id}.mp4", format="mp4")
+        #     overlay = overlay.overlay(soundn, position=0)
+        #     print(f"Mixage {song.id} OK")
+        # overlay.export(self.nomFichierMix, format="mp3")
+
+        self.nomFichierMix = f"partie/mix_{len(self.listeATrouver)}.mp3"
+
+        # Créer une liste pour stocker les segments audio trouvés
+        found_segments = []
+
+        for song in self.listeATrouver:
+            if song.found:
+                sound = AudioSegment.from_file(f"partie/{song.id}.mp4", format="mp4")
+                found_segments.append(sound)
+                print(f"Mixage {song.id} OK")
+
+        # Vérifier s'il y a des segments à mélanger
+        if found_segments:
+            self.nomFichierMix = f"partie/mix_{len(found_segments)}.mp3"
+            # Mélanger les segments trouvés
+            overlay = found_segments[0]
+            for sound_segment in found_segments[1:]:
+                overlay = overlay.overlay(sound_segment, position=0)
+
+            # Exporter le fichier mixé
+            overlay.export(self.nomFichierMix, format="mp3")
+            print("Mixage final OK")
+        else:
+            print("Aucun segment audio trouvé à mixer.")
 
     def play_music(self):
         start_time = 45

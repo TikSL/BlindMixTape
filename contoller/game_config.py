@@ -11,6 +11,7 @@ class gameConfig:
         self.joueurSelectionne = None
         self.sonSelectionne = None
         self.nbrTrouve = 0
+        self.premierPassagePlay = True
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
