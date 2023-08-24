@@ -496,12 +496,16 @@ class GameState:
             playListTitles.append((playTitreSon, playTitreSon_Rect))
             playListArtists.append((playArtistSon, playArtistSon_Rect))
 
-
+        playButtonPass = Button(images=ressources.menuPlayButton, pos=(screen_width * 0.85, screen_height * 0.12),
+                                text_input="PASSER",
+                                font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.045)),
+                                base_color="White",
+                                hovering_color="#6DC300")
 
         screen.blit(background, (0, 0))
         playMousePosition = pygame.mouse.get_pos()
 
-        for button in [playButtonMusic] + playListButtonCover:
+        for button in [playButtonMusic, playButtonPass] + playListButtonCover:
             button.update(screen)
 
         for info in playListTitles + playListArtists + playListFounder:
@@ -517,14 +521,20 @@ class GameState:
                         playButtonMusic.setImages(ressources.playButtonMuteMusic)
                         pygame.mixer.music.unpause()
                         self.state = "round_play"
+                        pass
+                if playButtonPass.checkForInput(playMousePosition):
+                    self.state = "inter_rounds"
+                    pass
                 for id, button in enumerate(playListButtonCover):
                     if button.checkForInput(playMousePosition) and not self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[id].found:
                         self.gameConf.sonSelectionne = id
                         self.state = "round_attrib"
+                        pass
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.mixer.music.unpause()
                     self.state = "round_play"
+                    pass
 
         pygame.display.flip()
 
