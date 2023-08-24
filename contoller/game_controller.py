@@ -87,6 +87,7 @@ class GameState:
             button.changeColor(menuMousePosition)
             button.update(screen)
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -617,7 +618,27 @@ class GameState:
         pygame.display.flip()
 
     def interRounds(self):
-        pass
+        screen.blit(background, (0, 0))
+        interRoundsTitre = ressources.get_font(ressources.nunitoRegular,
+                                               round(ressources.screen_height * 0.052)).render("SCORES", True, "white")
+        interRoundsTitre_Rect = interRoundsTitre .get_rect(
+            center=(ressources.screen_width * 0.50, ressources.screen_height * 0.116))
+        players_sorted = sorted(self.gameConf.listPlayers, key=lambda player: player.score, reverse=True)
+        screen.blit(interRoundsTitre, interRoundsTitre_Rect)
+        for i, vignette in enumerate(players_sorted):
+            if i==0:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.45,
+                                                   ressources.screen_height * 0.2))
+            if i==1:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.25,
+                                                   ressources.screen_height * 0.26))
+            if i==2:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.65,
+                                                   ressources.screen_height * 0.32))
+            if i>=3:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.01 +(i-2)*0.15*ressources.screen_width, ressources.screen_height*0.7))
+            players_sorted[i].vignette.afficher(screen)
+        pygame.display.flip()
 
     def end(self):
         pass
