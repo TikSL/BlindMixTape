@@ -24,8 +24,10 @@ class Mixtape:
 
         self.nomFichierMix = None
         client = deezer.Client()
-        playlist = client.get_playlist(11672649764)
-        playlist = client.get_playlist(10896810924) #top monde 2022
+        playlist = client.get_playlist(741188545) #top france 2022
+        # playlist = client.get_playlist(4380024462) #rock
+        # playlist = client.get_playlist(11672649764) #blindmixtape
+        # playlist = client.get_playlist(10896810924) #top monde 2022
         liste_sons = playlist.get_tracks()
         self.mixtape = random.sample(set(liste_sons), k = 6)
         self.listeATrouver = []
