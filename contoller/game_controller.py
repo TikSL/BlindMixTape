@@ -28,6 +28,7 @@ class GameState:
         mixer.music.set_volume(0.3)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
+        self.premierPassagePlay = True
 
     def _playAlignementJoueursBas_(self, nbrVignettes):
         total_width = screen_width * 0.097 * nbrVignettes
@@ -55,7 +56,7 @@ class GameState:
 
     def main_menu(self):
 
-        self.gameConf.premierPassagePlay = True
+        self.premierPassagePlay = True
         if not mixer.music.get_busy():
             mixer.music.play()
 
@@ -319,7 +320,6 @@ class GameState:
                     if self.gameConf.numRounds < 5:
                         lobbyOptionButtonRoundPlus.press(screen)
                         self.gameConf.numRounds += 1
-
                 if lobbyOptionButtonRoundMoins.checkForInput(lobbyMousePosition):
                     if self.gameConf.numRounds > 1:
                         lobbyOptionButtonRoundMoins.press(screen)
@@ -332,11 +332,11 @@ class GameState:
 
     def toRound(self):
         self.gameConf.currentRound += 1
-        for vignette in self.gameConf.listVignettes:
-
-            self.gameConf.listPlayers.append(Player(vignette.text.text_input, vignette))
-        for player in self.gameConf.listPlayers:
-            player.vignette.setScore(player.score)
+        if self.gameConf.currentRound == 1:
+            for vignette in self.gameConf.listVignettes:
+                self.gameConf.listPlayers.append(Player(vignette.text.text_input, vignette))
+            for player in self.gameConf.listPlayers:
+                player.vignette.setScore(player.score)
         self.gameConf.listMixtapes.append(Mixtape())
         self.gameConf.dspInfos()
         self.state = "round_play"
@@ -345,7 +345,7 @@ class GameState:
 
         self._playAlignementJoueursBas_(len(self.gameConf.listVignettes))
 
-        if self.gameConf.premierPassagePlay:
+        if self.premierPassagePlay:
             playSonAJouer = []
             for song in self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver:
                 if not song.found:
@@ -353,7 +353,7 @@ class GameState:
 
             for song in playSonAJouer:
                 song.play()
-            self.gameConf.premierPassagePlay = False
+            self.premierPassagePlay = False
 
 
         playButtonMusic = Button(
@@ -361,11 +361,6 @@ class GameState:
             pos=(screen_width * 0.5, screen_height * 0.1),
             text_input=None, font=None, base_color=None, hovering_color=None)
         playSoundOn = True
-
-        playButtonBack = Button(
-            images=ressources.lobbyButtonBack,
-            pos=(screen_width * 0.948, screen_height * 0.08),
-            text_input=None, font=None, base_color=None, hovering_color=None)
 
         button_positions = [
             (screen_width * 0.10, screen_height * 0.30),
@@ -417,7 +412,7 @@ class GameState:
         for i, vignette in enumerate(self.gameConf.listVignettes):
             vignette.afficher(screen)
 
-        for button in [playButtonBack, playButtonMusic] + playListButtonCover:
+        for button in [playButtonMusic] + playListButtonCover:
             button.update(screen)
 
         for infos in playListArtists + playListTitles + playListFounder:
@@ -428,10 +423,6 @@ class GameState:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if playButtonBack.checkForInput(playMousePosition):
-                    self.gameConf.listVignettes = []
-                    pygame.mixer.stop()
-                    self.state = "main_menu"
                 if playButtonMusic.checkForInput(playMousePosition):
                     if playSoundOn:
                         playButtonMusic.setImages(ressources.playButtonMuteMusic)
@@ -446,7 +437,7 @@ class GameState:
         pygame.display.flip()
 
     def roundPaused(self):
-        self.gameConf.premierPassagePlay = True
+        self.premierPassagePlay = True
         playButtonMusic = Button(
             images=ressources.playButtonMuteMusic,
             pos=(screen_width * 0.5, screen_height * 0.1),
@@ -628,9 +619,13 @@ class GameState:
         pygame.display.flip()
 
     def interRounds(self):
+
+        if self.gameConf.currentRound == self.gameConf.numRounds :
+            self.state = "end_game"
+            pass
         screen.blit(background, (0, 0))
         interRoundsTitre = ressources.get_font(ressources.nunitoRegular,
-                                               round(ressources.screen_height * 0.052)).render("SCORES", True, "white")
+                                               round(ressources.screen_height * 0.052)).render(f"Fin du round {self.gameConf.currentRound}", True, "white")
         interRoundsTitre_Rect = interRoundsTitre .get_rect(
             center=(ressources.screen_width * 0.50, ressources.screen_height * 0.116))
         players_sorted = sorted(self.gameConf.listPlayers, key=lambda player: player.score, reverse=True)
@@ -648,10 +643,78 @@ class GameState:
             if i>=3:
                 players_sorted[i].vignette.setPos((ressources.screen_width * 0.01 +(i-2)*0.15*ressources.screen_width, ressources.screen_height*0.7))
             players_sorted[i].vignette.afficher(screen)
+
+        playButtonPass = Button(images=ressources.menuPlayButton, pos=(screen_width * 0.85, screen_height * 0.12),
+                                text_input="PASSER",
+                                font=ressources.get_font(ressources.nunitoRegular, round(screen_width * 0.045)),
+                                base_color="White",
+                                hovering_color="#6DC300")
+
+        playButtonPass.update(screen)
+
+        menuMousePosition = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if playButtonPass.checkForInput(menuMousePosition):
+                    self.state = "to_round"
+
+
         pygame.display.flip()
 
     def end(self):
-        pass
+
+        screen.blit(background, (0, 0))
+
+        playButtonBack = Button(
+            images=ressources.lobbyButtonBack,
+            pos=(screen_width * 0.948, screen_height * 0.08),
+            text_input=None, font=None, base_color=None, hovering_color=None)
+
+        interRoundsTitre = ressources.get_font(ressources.nunitoRegular,
+                                               round(ressources.screen_height * 0.052)).render("FIN DU JEU", True, "white")
+        interRoundsTitre_Rect = interRoundsTitre.get_rect(
+            center=(ressources.screen_width * 0.50, ressources.screen_height * 0.116))
+        players_sorted = sorted(self.gameConf.listPlayers, key=lambda player: player.score, reverse=True)
+        screen.blit(interRoundsTitre, interRoundsTitre_Rect)
+        for i, vignette in enumerate(players_sorted):
+            if i == 0:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.45,
+                                                   ressources.screen_height * 0.2))
+                players_sorted[i].vignette.setScore(players_sorted[i].score, "Gold")
+                players_sorted[i].vignette.text.update_text_surface(color="Gold")
+            if i == 1:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.25,
+                                                   ressources.screen_height * 0.26))
+                players_sorted[i].vignette.setScore(players_sorted[i].score, "Silver")
+                players_sorted[i].vignette.text.update_text_surface(color="Silver")
+            if i == 2:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.65,
+                                                   ressources.screen_height * 0.32))
+                players_sorted[i].vignette.setScore(players_sorted[i].score, "Peru")
+                players_sorted[i].vignette.text.update_text_surface(color="Peru")
+            if i >= 3:
+                players_sorted[i].vignette.setPos((ressources.screen_width * 0.01 + (
+                            i - 2) * 0.15 * ressources.screen_width, ressources.screen_height * 0.7))
+            players_sorted[i].vignette.afficher(screen)
+
+        for button in [playButtonBack]:
+            button.update(screen)
+
+        playMousePosition =  pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if playButtonBack.checkForInput(playMousePosition):
+                self.gameConf.listVignettes = []
+                pygame.mixer.stop()
+                self.gameConf = gameConfig()
+                self.state = "main_menu"
+
+        pygame.display.flip()
 
     def stateManager(self):
         if self.state == "main_menu":

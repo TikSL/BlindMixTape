@@ -16,11 +16,11 @@ class TexteModifiable:
         self.is_editing = False
         self.update_text_surface()
 
-    def update_text_surface(self):
+    def update_text_surface(self, color="Black"):
         if self.is_editing:
             self.text_surface = self.font.render(self.text_input, True, GRAY)
         else:
-            self.text_surface = self.font.render(self.text_input, True, BLACK)
+            self.text_surface = self.font.render(self.text_input, True, color)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -34,7 +34,7 @@ class TexteModifiable:
 
         if self.is_editing:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_TAB:
                     if self.text_input.count(" ") == len(self.text_input) or len(self.text_input) == 0:
                         self.text_input = "???"
                     self.is_editing = False

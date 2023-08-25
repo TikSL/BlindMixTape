@@ -24,10 +24,7 @@ class Song:
         self.cover = f"game/cover_{str(self.id)}.jpg"
 
     def dspInfo(self):
-        print(f"---\n"
-              f"Titre : {self.title}\n"
-              f"Artiste : {self.artist}\n"
-              f"Difficulté : {self.difficulty}")
+        print(f"ID : {self.id} - Titre : {self.title}, Artiste : {self.artist}, Difficulté : {self.difficulty}")
 
     def dspCompleteInfo(self):
         self.dspInfo()

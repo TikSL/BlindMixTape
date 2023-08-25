@@ -3,7 +3,7 @@ class gameConfig:
     def __init__(self):
         self.difficulty = 0
         self.numPlayers = 2
-        self.numRounds = 1
+        self.numRounds = 2
         self.currentRound = 0
         self.listVignettes = []
         self.listPlayers = []
