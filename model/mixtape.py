@@ -34,9 +34,9 @@ class Mixtape:
         for id, s in enumerate(self.mixtape):
             self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
             # self.listeAMixer.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-            self.download_image(s.album.cover_medium, f"partie/cover_{str(id)}.jpg")
+            self.download_image(s.album.cover_medium, f"game/cover_{str(id)}.jpg")
 
-        # self.dl()
+        self.dl()
         print("CREATION MIXTAPE Téléchargement OK")
         # self.cut()
         self.normaliserAudio()
@@ -75,20 +75,20 @@ class Mixtape:
         #     print(f"Mixage {song.id} OK")
         # overlay.export(self.nomFichierMix, format="mp3")
 
-        self.nomFichierMix = f"partie/mix_{len(self.listeATrouver)}.mp3"
+        self.nomFichierMix = f"game/mix_{len(self.listeATrouver)}.mp3"
 
         # Créer une liste pour stocker les segments audio trouvés
         found_segments = []
 
         for song in self.listeATrouver:
             if song.found:
-                sound = AudioSegment.from_file(f"partie/{song.id}.mp4", format="mp4")
+                sound = AudioSegment.from_file(f"game/{song.id}.mp4", format="mp4")
                 found_segments.append(sound)
                 print(f"Mixage {song.id} OK")
 
         # Vérifier s'il y a des segments à mélanger
         if found_segments:
-            self.nomFichierMix = f"partie/mix_{len(found_segments)}.mp3"
+            self.nomFichierMix = f"game/mix_{len(found_segments)}.mp3"
             # Mélanger les segments trouvés
             overlay = found_segments[0]
             for sound_segment in found_segments[1:]:

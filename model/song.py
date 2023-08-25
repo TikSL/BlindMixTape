@@ -21,7 +21,7 @@ class Song:
         self.foundTimer= -1
         self.founder = None
         self.foundPosition = -1
-        self.cover = f"partie/cover_{str(self.id)}.jpg"
+        self.cover = f"game/cover_{str(self.id)}.jpg"
 
     def dspInfo(self):
         print(f"---\n"
