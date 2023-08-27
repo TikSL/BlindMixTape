@@ -25,7 +25,7 @@ class GameState:
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0.3)
+        mixer.music.set_volume(0)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
         self.premierPassagePlay = True
@@ -337,7 +337,13 @@ class GameState:
                 self.gameConf.listPlayers.append(Player(vignette.text.text_input, vignette))
             for player in self.gameConf.listPlayers:
                 player.vignette.setScore(player.score)
-        self.gameConf.listMixtapes.append(Mixtape())
+        if self.gameConf.difficulty == 0:
+            diff = [0, 0, 0, 0, 0, 0]
+        elif self.gameConf.difficulty == 1:
+            diff = [0, 0, 0, 1, 1, 1]
+        elif self.gameConf.difficulty == 2:
+            diff = [0, 0, 1, 1, 2, 2]
+        self.gameConf.listMixtapes.append(Mixtape(diff))
         self.gameConf.dspInfos()
         self.state = "round_play"
 
@@ -592,11 +598,17 @@ class GameState:
                                         player.score += 1
                                     self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver[self.gameConf.sonSelectionne].found = True
                                     self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver[self.gameConf.sonSelectionne].founder = player
-                                    self.gameConf.nbrTrouve += 1
+
                                     player.vignette.setScore(player.score)
                             self.gameConf.joueurSelectionne = None
-                            if self.gameConf.nbrTrouve == 6:
-                                self.gameConf.nbrTrouve = 0
+
+                            count_found = 0
+
+                            for song in self.gameConf.listMixtapes[self.gameConf.currentRound-1].listeATrouver:
+                                if song.found:
+                                    count_found += 1
+
+                            if count_found == 6:
                                 self.state = "inter_rounds"
                             else:
                                 self.state = "round_play"

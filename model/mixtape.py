@@ -4,6 +4,7 @@ import difflib
 import requests
 from pydub import AudioSegment
 from pygame import mixer
+from pytube import Search
 
 import song
 import deezer
@@ -20,20 +21,25 @@ class Mixtape:
         else:
             print("Échec du téléchargement de l'image.")
 
-    def __init__(self):
+    def __init__(self, difficulte):
 
         self.nomFichierMix = None
         client = deezer.Client()
-        playlist = client.get_playlist(741188545) #top france 2022
+        # playlist = client.get_playlist(10295099302)
+        # playlist = client.get_playlist(11682866204)
+        playlist = client.get_playlist(11682866204)
+        # playlist = client.get_playlist(10797319022)
+        # playlist = client.get_playlist(741188545) #top france 2022
         # playlist = client.get_playlist(4380024462) #rock
-        # playlist = client.get_playlist(11672649764) #blindmixtape
+        # playlist = client.get_playlist(11672649764) #blindmixtape bmt
         # playlist = client.get_playlist(10896810924) #top monde 2022
         liste_sons = playlist.get_tracks()
-        self.mixtape = random.sample(set(liste_sons), k = 6)
+
+        self.mixtape = self.piocher(liste_sons, difficulte)
+
         self.listeATrouver = []
         for id, s in enumerate(self.mixtape):
-            self.listeATrouver.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
-            # self.listeAMixer.append(song.Song(s.title, s.artist.name, 30, 1, id=id))
+            self.listeATrouver.append(song.Song(s.title_short, s.artist.name, 30, s.rank, id=id))
             self.download_image(s.album.cover_medium, f"game/cover_{str(id)}.jpg")
 
         self.dl()
@@ -116,7 +122,7 @@ class Mixtape:
                 mixer.music.pause()
                 sonTrouve = self.deviner()
                 if sonTrouve > 0:
-                    self.listeATrouver = self.listeATrouver[:sonTrouve] + self.listeATrouver[sonTrouve+1:]
+                    self.listeATrouver = self.listeATrouver[:sonTrouve] + self.listeATrouver[sonTrouve + 1:]
                     self.mixer()
                     mixer.music.unload()
                     mixer.music.load(self.nomFichierMix)
@@ -146,7 +152,7 @@ class Mixtape:
                 proposition = input(" ").lower()
                 if self.is_one_typo(proposition, titre):
                     print("MEC T'ES TROP CHAUD ARTISTE + TITRE  WAOUH")
-                else :
+                else:
                     print("C'est OK t'avais que le nom de l'artiste")
                 return song.id
             elif self.is_one_typo(proposition, titre):
@@ -154,9 +160,48 @@ class Mixtape:
                 proposition = input(" ").lower()
                 if self.is_one_typo(proposition, artiste):
                     print("MEC T'ES TROP CHAUD TITRE + ARTISTE  SHEEEEESH")
-                else :
+                else:
                     print("C'est OK t'avais que le titre")
                 return song.id
 
         print("T'avais rien nt ... (nulos)")
         return -1
+
+    def piocher(self, liste_sons, difficulte):
+        print("Pioche Mixtape début")
+        listeMixtape = []
+        while len(listeMixtape) < 6:
+            essai = random.choice(liste_sons)
+            if essai not in listeMixtape:
+                try:
+                    search_query = f"{essai.artist.name} {essai.title}"
+                    search_results = Search(search_query).results
+                    if search_results:
+                        first_result = search_results[0]
+                        views = first_result.views
+                    else:
+                        views = 0
+
+                    print(essai.rank, views, essai.title_short, essai.artist.name, essai.rank * 10 + views)
+                    diffSon = essai.rank * 10 + views
+                    diffSon = self._evalDiff(diffSon)
+                    if diffSon in difficulte:
+                        difficulte.remove(diffSon)
+                        listeMixtape.append(essai)
+                        print(f"Son de diff {diffSon} trouvé. Restants : {difficulte}")
+
+                except Exception as e:
+                    pass
+
+        return listeMixtape
+
+    def _evalDiff(self, diffSon):
+        if diffSon > 500000000:
+            return 0
+        elif diffSon > 200000000:
+            return 1
+        else:
+            return 2
+
+
+
