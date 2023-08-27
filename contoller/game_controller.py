@@ -25,7 +25,7 @@ class GameState:
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0)
+        mixer.music.set_volume(0.2)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
         self.premierPassagePlay = True
@@ -123,7 +123,7 @@ class GameState:
     def lobby(self):
 
 
-        difficulty = ["FACILE", "MOYEN", "DIFFICILE"]
+        difficulty = ["FACILE", "MOYEN", "DIFFICILE", "PROGRES."]
 
         lobbyTitreOption = ressources.get_font(ressources.nunitoRegular,
                                                round(ressources.screen_height * 0.052)).render("OPTIONS", True, "white")
@@ -308,7 +308,7 @@ class GameState:
                         self.gameConf.listVignettes.pop()
 
                 if lobbyOptionButtonDiffPlus.checkForInput(lobbyMousePosition):
-                    if self.gameConf.difficulty < 2:
+                    if self.gameConf.difficulty < 3:
                         lobbyOptionButtonDiffPlus.press(screen)
                         self.gameConf.difficulty += 1
                 if lobbyOptionButtonDiffMoins.checkForInput(lobbyMousePosition):
@@ -343,6 +343,14 @@ class GameState:
             diff = [0, 0, 0, 1, 1, 1]
         elif self.gameConf.difficulty == 2:
             diff = [0, 0, 1, 1, 2, 2]
+        elif self.gameConf.difficulty == 3:
+            ratio = self.gameConf.currentRound // self.gameConf.numRounds
+            if ratio <= 0.5:
+                diff = [0, 0, 0, 0, 0, 0]
+            elif ratio > 0.5 and ratio <= 0.75:
+                diff = [0, 0, 0, 1, 1, 1]
+            else:
+                diff = [0, 0, 1, 1, 2, 2]
         self.gameConf.listMixtapes.append(Mixtape(diff))
         self.gameConf.dspInfos()
         self.state = "round_play"

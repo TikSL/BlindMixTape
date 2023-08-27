@@ -27,9 +27,9 @@ class Mixtape:
         client = deezer.Client()
         # playlist = client.get_playlist(10295099302)
         # playlist = client.get_playlist(11682866204)
-        playlist = client.get_playlist(11682866204)
+        # playlist = client.get_playlist(11682866204)
         # playlist = client.get_playlist(10797319022)
-        # playlist = client.get_playlist(741188545) #top france 2022
+        playlist = client.get_playlist(741188545) #top france 2022
         # playlist = client.get_playlist(4380024462) #rock
         # playlist = client.get_playlist(11672649764) #blindmixtape bmt
         # playlist = client.get_playlist(10896810924) #top monde 2022
@@ -196,9 +196,9 @@ class Mixtape:
         return listeMixtape
 
     def _evalDiff(self, diffSon):
-        if diffSon > 500000000:
+        if diffSon > 400000000:
             return 0
-        elif diffSon > 200000000:
+        elif diffSon > 100000000:
             return 1
         else:
             return 2
