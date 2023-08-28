@@ -1,5 +1,6 @@
 import random
 import difflib
+import time
 
 import requests
 from pydub import AudioSegment
@@ -170,7 +171,8 @@ class Mixtape:
     def piocher(self, liste_sons, difficulte):
         print("Pioche Mixtape début")
         listeMixtape = []
-        while len(listeMixtape) < 6:
+        t_init = time.time()
+        while len(listeMixtape) < 6 or time.time() - t_init < 60:
             essai = random.choice(liste_sons)
             if essai not in listeMixtape:
                 try:
@@ -193,6 +195,12 @@ class Mixtape:
                 except Exception as e:
                     pass
 
+        if len(listeMixtape) < 6 :
+            essai = random.choice(liste_sons)
+            if essai not in listeMixtape:
+                listeMixtape.append(essai)
+                print(f"Son de diff random trouvé car la recherche a duré plus d'une minute.")
+                
         return listeMixtape
 
     def _evalDiff(self, diffSon):
