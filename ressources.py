@@ -7,8 +7,8 @@ nunitoRegular = "view/assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "view/assets/bubble3D.ttf"
 blomberg = "view/assets/blomberg/Blomberg.otf"
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-screen_width = 1280
-screen_height = 720
+# screen_width = 1280
+# screen_height = 720
 
 
 def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à la taille désirée

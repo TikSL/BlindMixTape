@@ -44,7 +44,6 @@ class Song:
         song[self.startTimer:self.startTimer + 30000].export(f"game/{self.id}.mp3", format="mp3")
         print(f"Son {self.id} téléchargé")
 
-
     def setAudioLevel(self):
         sound = AudioSegment.from_file(f"game/{self.id}.mp3", "mp3")
         normalized_sound = match_target_amplitude(sound, -20.0)

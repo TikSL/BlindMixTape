@@ -35,7 +35,7 @@ def generationMixtape(playlist, difficulty):
     listeMixtape = []
     listeATrouver = []
     t_init = time.time()
-    while len(listeMixtape) < 6 and time.time() - t_init < 60:
+    while len(listeMixtape) < 6 and time.time() - t_init < 1:
         essai = random.choice(liste_sons)
         if essai not in listeMixtape:
             try:
@@ -56,7 +56,7 @@ def generationMixtape(playlist, difficulty):
                     listeATrouver.append(song.Song(essai.title_short, essai.artist.name, start, diffSon,
                                                    index=len(listeMixtape)-1))
                     print(f"Son de diff {diffSon} trouvé. Restants : {difficulty}")
-                    download_image(essai.album.cover_medium, f"game/cover_{str(len(listeMixtape))}.jpg")
+                    download_image(essai.album.cover_medium, f"game/cover_{str(len(listeMixtape)-1)}.jpg")
 
             except Exception:
                 pass
@@ -70,7 +70,7 @@ def generationMixtape(playlist, difficulty):
                 listeATrouver.append(song.Song(essai.title_short, essai.artist.name, start, None,
                                                index=len(listeMixtape)-1))
                 print(f"Son de difficulté aléatoire trouvé car la recherche a duré plus d'une minute.")
-                download_image(essai.album.cover_medium, f"game/cover_{str(len(listeMixtape))}.jpg")
+                download_image(essai.album.cover_medium, f"game/cover_{str(len(listeMixtape)-1)}.jpg")
 
     return listeMixtape, listeATrouver
 
@@ -81,7 +81,7 @@ class Mixtape:
 
         self.nomFichierMix = None
         self.mixtape, self.listeATrouver = generationMixtape(playlist, difficulty)
-        self.dl()
+        # self.dl()
         self.normaliserAudio()
 
     def dspInfos(self):

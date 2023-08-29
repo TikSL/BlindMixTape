@@ -14,7 +14,7 @@ class TexteModifiable:
         self.font = ressources.get_font(ressources.nunitoRegular, 30)
         self.text_input = "???"
         self.is_editing = False
-        self.update_text_surface()
+        self.text_surface = self.font.render(self.text_input, True, BLACK)
 
     def update_text_surface(self, color="Black"):
         if self.is_editing:

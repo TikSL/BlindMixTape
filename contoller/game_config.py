@@ -1,4 +1,4 @@
-class gameConfig:
+class GameConfig:
 
     def __init__(self):
         self.difficulty = 0

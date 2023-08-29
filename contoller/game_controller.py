@@ -7,21 +7,21 @@ from pygame import mixer, time, USEREVENT
 from player import Player
 import ressources
 from button import Button
-from game_config import gameConfig
+from game_config import GameConfig
 from mixtape import Mixtape
 from vignette_joueur import VignetteJoueur
 from volume_bar import VolumeBar
 
 
-# screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-screen_width = 1280
-screen_height = 720
+screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
+# screen_width = 1280
+# screen_height = 720
 print(f"Affichage : {screen_width} x {screen_height}")
 
 
 class GameState:
     def __init__(self):
-        self.gameConf = gameConfig()
+        self.gameConf = GameConfig()
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
@@ -731,7 +731,7 @@ class GameState:
             if playButtonBack.checkForInput(playMousePosition):
                 self.gameConf.listVignettes = []
                 pygame.mixer.stop()
-                self.gameConf = gameConfig()
+                self.gameConf = GameConfig()
                 self.state = "main_menu"
 
         pygame.display.flip()

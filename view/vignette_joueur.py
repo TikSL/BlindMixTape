@@ -45,7 +45,7 @@ class VignetteJoueur:
                                           (0.093 * ressources.screen_height)))
         if self.score:
             self.scoreRect = self.score.get_rect(center=(self.x + (0.094 * ressources.screen_width), self.y +
-                                        (0.003 * ressources.screen_height)))
+                                                         (0.003 * ressources.screen_height)))
 
     def afficher(self, screen):
         screen.blit(self.image, self.rect)
@@ -58,7 +58,6 @@ class VignetteJoueur:
             pygame.draw.rect(screen, self.border_color, self.rect, 4)
         if self.score:
             screen.blit(self.score, self.scoreRect)
-
 
     def realigner(self, k):
         self.x = 0.586 * ressources.screen_width + (k % 3) * 0.197 * ressources.screen_height
@@ -73,19 +72,21 @@ class VignetteJoueur:
     def changer_personnageApres(self):
         self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) + 1) % 20]
         self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso),
-                                                                (0.065 * ressources.screen_width, 0.116 * ressources.screen_height))])
+                                                                (0.065 * ressources.screen_width,
+                                                                 0.116 * ressources.screen_height))])
         self.__update__()
 
     def changer_personnageAvant(self):
         self.bufferPerso = ressources.persos[(ressources.persos.index(self.bufferPerso) - 1) % 20]
         self.personnage_image.setImages([pygame.transform.scale(pygame.image.load(self.bufferPerso),
-                                                                (0.065 * ressources.screen_width, 0.116 * ressources.screen_height))])
+                                                                (0.065 * ressources.screen_width,
+                                                                 0.116 * ressources.screen_height))])
         self.__update__()
 
     def setScore(self, score, color="FireBrick"):
         if score is not None:
             self.score = ressources.get_font(ressources.blomberg,
-                                                   round(ressources.screen_height * 0.08)).render(
+                                             round(ressources.screen_height * 0.08)).render(
                 str(score),
                 True,
                 color)
