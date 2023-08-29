@@ -15,6 +15,23 @@ def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à l
     return pygame.font.Font(font, size)
 
 
+# Dico des playlists Deezer
+playlistsDeezer = {
+    "top Actuel": 53362031,
+    "top FR 2022": 741188545,
+    "top Monde 2022": 10896810924,
+    "Rap FR 2022": 10855125902,
+    "Rock": 1306931615,
+    "Pop": 1036183001,
+    "Reggae": 2448918882,
+    "Classique": 747148961,
+    "Metal": 2655390504,
+    "Disco": 2015058202,
+    "K-pop": 873660353,
+    "BMT": 11682866204,
+    "Top 500 all time": 10295099302
+}
+
 largeurBoutons = screen_width * 0.039
 hauteurBoutons = screen_height * 0.069
 # Menu Principal
@@ -46,9 +63,12 @@ lobbyButtonPlus = [
     pygame.transform.scale(pygame.image.load("view/assets/buttons/plus/plus_3.png"), (largeurBoutons, hauteurBoutons))]
 
 lobbyButtonMoins = [
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_1.png"), (largeurBoutons, hauteurBoutons)),
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_2.png"), (largeurBoutons, hauteurBoutons)),
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_3.png"), (largeurBoutons, hauteurBoutons))]
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_1.png"),
+                           (largeurBoutons, hauteurBoutons)),
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_2.png"),
+                           (largeurBoutons, hauteurBoutons)),
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/moins/moins_3.png"),
+                           (largeurBoutons, hauteurBoutons))]
 
 lobbyButtonBack = [pygame.transform.scale(pygame.image.load("view/assets/buttons/home/home_1.png"),
                                           (0.065 * screen_width, 0.116 * screen_height)),
@@ -76,9 +96,12 @@ lobbyMute = [
     pygame.transform.scale(pygame.image.load("view/assets/buttons/Mute/Mute_3.png"), (largeurBoutons, hauteurBoutons))]
 
 lobbySoundOn = [
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_1.png"), (largeurBoutons, hauteurBoutons)),
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_2.png"), (largeurBoutons, hauteurBoutons)),
-    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_3.png"), (largeurBoutons, hauteurBoutons))]
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_1.png"),
+                           (largeurBoutons, hauteurBoutons)),
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_2.png"),
+                           (largeurBoutons, hauteurBoutons)),
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/SoundOn/SoundOn_3.png"),
+                           (largeurBoutons, hauteurBoutons))]
 
 persos = [f"view/assets/perso/perso_{k}.png" for k in range(1, 21)]
 
