@@ -1,14 +1,16 @@
 # Ressources générales
 import pygame
 
+version = 1.1
+
 pygame.init()
 background = "view/assets/windows/Window_10.png"
 nunitoRegular = "view/assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "view/assets/bubble3D.ttf"
 blomberg = "view/assets/blomberg/Blomberg.otf"
+
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-# screen_width = 1280
-# screen_height = 720
+# screen_width, screen_height = 1280, 720
 
 
 def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à la taille désirée
@@ -40,6 +42,8 @@ menuLogo = pygame.image.load("view/assets/logo.png")
 menuGIF = [pygame.transform.scale(pygame.image.load(f"view/assets/GIF_dance/frame_{i}_delay-0.08s.gif"),
                                   (0.195 * screen_width, 0.374 * screen_height)) for i in range(18)]
 menuPlayButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_14.png"),
+                                         (0.185 * screen_width, 0.146 * screen_height))]
+menuOptionButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_13.png"),
                                          (0.185 * screen_width, 0.146 * screen_height))]
 menuQuitButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_15.png"),
                                          (0.185 * screen_width, 0.146 * screen_height))]
