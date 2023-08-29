@@ -13,9 +13,14 @@ from volume_bar import VolumeBar
 
 
 def messageInit():
-    print(f"BLINDMIXTAPE\n\n"
-          f"Crée par TikSl, basé sur les blindtests de Navo dans le podcast \"Un Bon Moment\".\n"
+    print(ressources.titleInit)
+    print(f"\n"
+          f"Crée par TikSl avec l'aide de HageshiiYagi.\n"
+          f"Jeu basé sur les blindtests de Navo dans le podcast \"Un Bon Moment\" de Kyan Khojandi et Navo.\n"
+          f"Lien du podcast : https://www.youtube.com/playlist?list=PLSkidoCR8oB3HDB-QSDlwGYbjeb5Ra4wG \n"
+          f"Lien GitHub : https://github.com/TikSL/BlindMixTape\n"
           f"Version {ressources.version}\n")
+
     print(f"Affichage : {ressources.screen_width} x {ressources.screen_height}")
 
 
@@ -26,7 +31,7 @@ class GameState:
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0.2)
+        mixer.music.set_volume(0.5)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
         self.premierPassagePlay = True
@@ -52,7 +57,7 @@ class GameState:
                 vignette.setPos(((0.097 * ressources.screen_width) * i + ecartVignettesHaut * (i + 1), 100))
             else:
                 vignette.setPos(((0.097 * ressources.screen_width) * (i - nbrVignettesHaut) + ecartVignettesBas * (
-                        i - nbrVignettesHaut + 1), 300))
+                        i - nbrVignettesHaut + 1), 400))
 
     def main_menu(self):
 
@@ -178,9 +183,9 @@ class GameState:
             images=ressources.lobbyButtonPlay,
             pos=(ressources.screen_width * 0.596, ressources.screen_height * 0.914),
             text_input="PLAY",
-            font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.055)),
-            base_color="White",
-            hovering_color="#6DC300")
+            font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.035)),
+            base_color="#6BBF00",
+            hovering_color="white")
 
         lobbyMousePosition = pygame.mouse.get_pos()
         screen.blit(background, (0, 0))
@@ -578,6 +583,7 @@ class GameState:
         attributionPointsCroix = Button(images=ressources.attributionPointsBoutonCroix,
                                         pos=(ressources.screen_width * 0.92, ressources.screen_height * (1 / 8)),
                                         text_input=None, font=None, base_color=None, hovering_color=None)
+
         self._attributionPointsAlignementJoueursMotif_(len(self.gameConf.listVignettes))
 
         screen.blit(fond_attribution, (ressources.screen_width * 0.02, (1 / 25) * ressources.screen_height))
