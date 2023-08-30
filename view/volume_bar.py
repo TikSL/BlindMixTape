@@ -71,12 +71,12 @@ class VolumeBar:
                 # Ajuster le volume de la musique
                 pygame.mixer.music.set_volume(self.current_volume)
 
-                if self.current_volume == 0:
-                    self.volumeButton.setImages(ressources.lobbyMute)
-                    pygame.mixer.music.set_volume(self.current_volume)
+        if self.current_volume == 0:
+            self.volumeButton.setImages(ressources.lobbyMute)
+            pygame.mixer.music.set_volume(self.current_volume)
 
-                else:
-                    self.volumeButton.setImages(ressources.lobbySoundOn)
+        else:
+            self.volumeButton.setImages(ressources.lobbySoundOn)
 
 
 
