@@ -25,6 +25,22 @@ def messageInit():
 
     print(f"Affichage : {ressources.screen_width} x {ressources.screen_height}")
 
+def decouper_phrase(phrase, paquet_max_length= 8):
+    liste_paquets = []
+    paquet = []
+    mots = phrase.split()
+    if len(mots) == 1:
+        return mots
+    for mot in mots:
+        if len(' '.join(paquet + [mot])) <= paquet_max_length:
+            paquet.append(mot)
+        else:
+            liste_paquets.append(' '.join(paquet))
+            paquet = [mot]
+    if paquet:
+        liste_paquets.append(' '.join(paquet))
+    return liste_paquets
+
 
 class GameState:
     def __init__(self):
@@ -294,16 +310,28 @@ class GameState:
                                                      round(ressources.screen_height * 0.029)).render(
             f"Style de playlist", True,
             "#CC191C")
-        lobbyTitreOptionStyle_Rect = lobbyTitreOptionRounds.get_rect(
+        lobbyTitreOptionStyle_Rect = lobbyTitreOptionStyle.get_rect(
             center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
         screen.blit(lobbyTitreOptionStyle, lobbyTitreOptionStyle_Rect)
 
-        lobbyDataStyle = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
-            f"{self.gameConf.style}", True,
-            "#CC191C")
-        lobbyDataStyle_Rect = lobbyDataRounds.get_rect(
-            center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
-        screen.blit(lobbyDataStyle, lobbyDataStyle_Rect)
+        liste_texte = []
+        texte = decouper_phrase(self.gameConf.style)
+        for i, mot in enumerate(texte) :
+
+            lobbyDataStyle = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
+                f"{mot}", True,
+                "#CC191C")
+            if len(texte) > 1:
+                lobbyDataStyle_Rect = lobbyDataStyle.get_rect(
+                    center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.084 + ressources.screen_height * 0.025 * i))
+                liste_texte.append((lobbyDataStyle, lobbyDataStyle_Rect))
+            else :
+                lobbyDataStyle_Rect = lobbyDataStyle.get_rect(
+                    center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
+                liste_texte.append((lobbyDataStyle, lobbyDataStyle_Rect))
+
+        for (mot_infos, mot_infos_rect) in liste_texte:
+            screen.blit(mot_infos, mot_infos_rect)
 
         for button in [lobbyButtonBack, lobbyButtonPlay,
                        lobbyOptionButtonRoundMoins, lobbyOptionButtonRoundPlus,
@@ -378,9 +406,9 @@ class GameState:
                         self.gameConf.numRounds -= 1
 
                 if lobbyOptionButtonPlaylistPlus.checkForInput(lobbyMousePosition):
-                    pass
+                    self.gameConf.updateStyle(1)
                 if lobbyOptionButtonPlaylistMoins.checkForInput(lobbyMousePosition):
-                    pass
+                    self.gameConf.updateStyle(-1)
 
             volume_bar.handle_event(event, mousePosition=lobbyMousePosition, screen=screen)
 
@@ -393,6 +421,7 @@ class GameState:
                 self.gameConf.listPlayers.append(Player(vignette.text.text_input, vignette))
             for player in self.gameConf.listPlayers:
                 player.vignette.setScore(player.score)
+        diff = [0, 0, 0, 0, 0, 0]
         if self.gameConf.difficulty == 0:
             diff = [0, 0, 0, 0, 0, 0]
         elif self.gameConf.difficulty == 1:
@@ -407,7 +436,10 @@ class GameState:
                 diff = [0, 0, 0, 1, 1, 1]
             else:
                 diff = [0, 0, 1, 1, 2, 2]
-        self.gameConf.listMixtapes.append(Mixtape(diff))
+        id_playlist = ressources.playlistsDeezer[self.gameConf.style]
+        print(f"Round {self.gameConf.currentRound}\n"
+              f"Génération Mixtape - {self.gameConf.style} - Id playlist Deezer {id_playlist}")
+        self.gameConf.listMixtapes.append(Mixtape(diff, playlist=id_playlist))
         self.gameConf.dspInfos()
         self.state = "round_play"
 

@@ -27,11 +27,11 @@ def _evalDiff(diffSon):
         return 2
 
 
-def generationMixtape(playlist, difficulty):
+def generationMixtape(id_playlist, difficulty):
+
     client = deezer.Client()
-    playlist = client.get_playlist(ressources.playlistsDeezer[playlist])
+    playlist = client.get_playlist(id_playlist)
     liste_sons = playlist.get_tracks()
-    print("Pioche Mixtape début")
     listeMixtape = []
     listeATrouver = []
     t_init = time.time()

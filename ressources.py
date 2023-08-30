@@ -28,9 +28,9 @@ def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à l
 
 # Dico des playlists Deezer
 playlistsDeezer = {
-    "top Actuel": 53362031,
-    "top FR 2022": 741188545,
-    "top Monde 2022": 10896810924,
+    "Actuel": 53362031,
+    "FR 2022": 741188545,
+    "Monde 2022": 10896810924,
     "Rap FR 2022": 10855125902,
     "Rock": 1306931615,
     "Pop": 1036183001,
@@ -40,7 +40,7 @@ playlistsDeezer = {
     "Disco": 2015058202,
     "K-pop": 873660353,
     "BMT": 11682866204,
-    "Top 500 all time": 10295099302
+    "Top 500 ever": 10295099302
 }
 
 largeurBoutons = screen_width * 0.039

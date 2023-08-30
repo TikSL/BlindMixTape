@@ -1,3 +1,6 @@
+import ressources
+
+
 class GameConfig:
 
     def __init__(self):
@@ -11,7 +14,7 @@ class GameConfig:
         self.joueurSelectionne = None
         self.sonSelectionne = None
         self.premierPassagePlay = True
-        self.style = "TOPA"
+        self.style = "Actuel"
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
@@ -32,3 +35,17 @@ class GameConfig:
             player.dspInfos()
         for mixtape in self.listMixtapes:
             mixtape.dspInfos()
+
+    def updateStyle(self, param):
+        listeStyle = list(ressources.playlistsDeezer.keys()) + ["playlist\nperso"]
+        index = listeStyle.index(self.style)
+        if param == 1:
+            if index == len(listeStyle)-1:
+                self.style = listeStyle[0]
+            else :
+                self.style = listeStyle[index + 1]
+        elif param == -1:
+            if index == 0:
+                self.style = listeStyle[len(listeStyle)-1]
+            else:
+                self.style = listeStyle[index - 1]
