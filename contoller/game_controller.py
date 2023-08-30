@@ -746,11 +746,12 @@ class GameState:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if playButtonBack.checkForInput(playMousePosition):
-                self.gameConf.listVignettes = []
-                pygame.mixer.stop()
-                self.gameConf = GameConfig()
-                self.state = "main_menu"
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if playButtonBack.checkForInput(playMousePosition):
+                    self.gameConf.listVignettes = []
+                    pygame.mixer.stop()
+                    self.gameConf = GameConfig()
+                    self.state = "main_menu"
 
         pygame.display.flip()
 
