@@ -1,3 +1,5 @@
+from typing import re
+
 import pygame
 import sys
 from pygame import mixer, time, USEREVENT
@@ -142,46 +144,60 @@ class GameState:
         lobbyTitreOption = ressources.get_font(ressources.nunitoRegular,
                                                round(ressources.screen_height * 0.052)).render("OPTIONS", True, "white")
         lobbyTitreOption_Rect = lobbyTitreOption.get_rect(
-            center=(ressources.screen_width * 0.270, ressources.screen_height * 0.116))
+            center=(ressources.screen_width * 0.270, ressources.screen_height * 0.085))
 
+        pos_y = ressources.screen_height * 0.298
         lobbyOptionButtonNbrJoueursPlus = Button(
             images=ressources.lobbyButtonPlus,
-            pos=(ressources.screen_width * 0.358, ressources.screen_height * 0.324),
+            pos=(ressources.screen_width * 0.358, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
         lobbyOptionButtonNbrJoueursMoins = Button(
             images=ressources.lobbyButtonMoins,
-            pos=(ressources.screen_width * 0.228, ressources.screen_height * 0.324),
+            pos=(ressources.screen_width * 0.228, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
+        pos_y += 0.166 * ressources.screen_height
         lobbyOptionButtonDiffPlus = Button(
             images=ressources.lobbyButtonPlus,
-            pos=(ressources.screen_width * 0.358, ressources.screen_height * 0.521),
+            pos=(ressources.screen_width * 0.358, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
         lobbyOptionButtonDiffMoins = Button(
             images=ressources.lobbyButtonMoins,
-            pos=(ressources.screen_width * 0.228, ressources.screen_height * 0.521),
+            pos=(ressources.screen_width * 0.228, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
+        pos_y += 0.166 * ressources.screen_height
         lobbyOptionButtonRoundPlus = Button(
             images=ressources.lobbyButtonPlus,
-            pos=(ressources.screen_width * 0.358, ressources.screen_height * 0.718),
+            pos=(ressources.screen_width * 0.358, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
         lobbyOptionButtonRoundMoins = Button(
             images=ressources.lobbyButtonMoins,
-            pos=(ressources.screen_width * 0.228, ressources.screen_height * 0.718),
+            pos=(ressources.screen_width * 0.228, pos_y),
+            text_input=None, font=None, base_color=None, hovering_color=None)
+
+        pos_y += 0.166 * ressources.screen_height
+        lobbyOptionButtonPlaylistPlus = Button(
+            images=ressources.lobbyButtonRight,
+            pos=(ressources.screen_width * 0.358, pos_y),
+            text_input=None, font=None, base_color=None, hovering_color=None)
+
+        lobbyOptionButtonPlaylistMoins = Button(
+            images=ressources.lobbyButtonLeft,
+            pos=(ressources.screen_width * 0.228, pos_y),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
         lobbyButtonBack = Button(
             images=ressources.lobbyButtonBack,
-            pos=(ressources.screen_width * 0.052, ressources.screen_height * 0.920),
+            pos=(ressources.screen_width * 0.052, ressources.screen_height * 0.910),
             text_input=None, font=None, base_color=None, hovering_color=None)
 
         lobbyButtonPlay = Button(
             images=ressources.lobbyButtonPlay,
-            pos=(ressources.screen_width * 0.596, ressources.screen_height * 0.914),
+            pos=(ressources.screen_width * 0.596, ressources.screen_height * 0.904),
             text_input="PLAY",
             font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.035)),
             base_color="#6BBF00",
@@ -197,24 +213,24 @@ class GameState:
 
         # Fenetre des options
         screen.blit(ressources.lobbyWindowOption1,
-                    (ressources.screen_width * 0.091, ressources.screen_height * 0.058))
+                    (ressources.screen_width * 0.085, ressources.screen_height * 0.030))
 
         # Titre
 
         screen.blit(lobbyTitreOption, lobbyTitreOption_Rect)
-
+        pos_y = ressources.screen_height * 0.205
         # Options du nombre de joueurs
         screen.blit(ressources.lobbyWindowOption2,
-                    (ressources.screen_width * 0.117, ressources.screen_height * 0.231))
+                    (ressources.screen_width * 0.117, pos_y))
         screen.blit(ressources.lobbyIconPlayers,
-                    (ressources.screen_width * 0.124, ressources.screen_height * 0.249))
+                    (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
         lobbyTitreOptionNbrJoueurs = ressources.get_font(ressources.nunitoRegular,
                                                          round(ressources.screen_height * 0.029)).render(
             f"Nombre de joueurs",
             True,
             "#CC191C")
         lobbyTitreOptionNbrJoueurs_Rect = lobbyTitreOptionNbrJoueurs.get_rect(
-            center=(ressources.screen_width * 0.286, ressources.screen_height * 0.266))
+            center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
         screen.blit(lobbyTitreOptionNbrJoueurs, lobbyTitreOptionNbrJoueurs_Rect)
 
         lobbyDataNombreJoueurs = ressources.get_font(ressources.nunitoRegular,
@@ -223,21 +239,22 @@ class GameState:
             True,
             "#CC191C")
         lobbyDataNombreJoueurs_Rect = lobbyDataNombreJoueurs.get_rect(
-            center=(ressources.screen_width * 0.293, ressources.screen_height * 0.324))
+            center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
         screen.blit(lobbyDataNombreJoueurs, lobbyDataNombreJoueurs_Rect)
 
         # Option difficulté
+        pos_y = pos_y + ressources.screen_height * 0.166
         screen.blit(ressources.lobbyWindowOption2,
-                    (ressources.screen_width * 0.117, ressources.screen_height * 0.428))
+                    (ressources.screen_width * 0.117, pos_y))
         screen.blit(ressources.lobbyIconDifficulty,
-                    (ressources.screen_width * 0.124, ressources.screen_height * 0.446))
+                    (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
 
         lobbyTitreOptionDifficulte = ressources.get_font(ressources.nunitoRegular,
                                                          round(ressources.screen_height * 0.029)).render(
             f"Difficulté", True,
             "#CC191C")
         lobbyTitreOptionDifficulte_Rect = lobbyTitreOptionDifficulte.get_rect(
-            center=(ressources.screen_width * 0.286, ressources.screen_height * 0.463))
+            center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
         screen.blit(lobbyTitreOptionDifficulte, lobbyTitreOptionDifficulte_Rect)
 
         lobbyDataLvlDifficulte = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
@@ -245,32 +262,54 @@ class GameState:
 
             "#CC191C")
         lobbyDataLvlDifficulte_Rect = lobbyDataLvlDifficulte.get_rect(
-            center=(ressources.screen_width * 0.293, ressources.screen_height * 0.521))
+            center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
         screen.blit(lobbyDataLvlDifficulte, lobbyDataLvlDifficulte_Rect)
 
         # Option nombres de rounds
-        screen.blit(ressources.lobbyWindowOption2,
-                    (ressources.screen_width * 0.117, ressources.screen_height * 0.625))
-        screen.blit(ressources.lobbyIconRounds, (ressources.screen_width * 0.124, ressources.screen_height * 0.643))
+        pos_y = pos_y + ressources.screen_height * 0.166
+        screen.blit(ressources.lobbyWindowOption2, (ressources.screen_width * 0.117, pos_y))
+        screen.blit(ressources.lobbyIconRounds, (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
 
         lobbyTitreOptionRounds = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
             f"Nombre de manches", True,
             "#CC191C")
         lobbyTitreOptionRounds_Rect = lobbyTitreOptionRounds.get_rect(
-            center=(ressources.screen_width * 0.286, ressources.screen_height * 0.660))
+            center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
         screen.blit(lobbyTitreOptionRounds, lobbyTitreOptionRounds_Rect)
 
         lobbyDataRounds = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
             f"{self.gameConf.numRounds}", True,
             "#CC191C")
         lobbyDataRounds_Rect = lobbyDataRounds.get_rect(
-            center=(ressources.screen_width * 0.293, ressources.screen_height * 0.718))
+            center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
         screen.blit(lobbyDataRounds, lobbyDataRounds_Rect)
+
+        # Option style de playlist
+        pos_y = pos_y + ressources.screen_height * 0.166
+        screen.blit(ressources.lobbyWindowOption2, (ressources.screen_width * 0.117, pos_y))
+        screen.blit(ressources.lobbyIconStyle,
+                    (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
+
+        lobbyTitreOptionStyle = ressources.get_font(ressources.nunitoRegular,
+                                                     round(ressources.screen_height * 0.029)).render(
+            f"Style de playlist", True,
+            "#CC191C")
+        lobbyTitreOptionStyle_Rect = lobbyTitreOptionRounds.get_rect(
+            center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
+        screen.blit(lobbyTitreOptionStyle, lobbyTitreOptionStyle_Rect)
+
+        lobbyDataStyle = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
+            f"{self.gameConf.style}", True,
+            "#CC191C")
+        lobbyDataStyle_Rect = lobbyDataRounds.get_rect(
+            center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
+        screen.blit(lobbyDataStyle, lobbyDataStyle_Rect)
 
         for button in [lobbyButtonBack, lobbyButtonPlay,
                        lobbyOptionButtonRoundMoins, lobbyOptionButtonRoundPlus,
                        lobbyOptionButtonDiffMoins, lobbyOptionButtonDiffPlus,
-                       lobbyOptionButtonNbrJoueursPlus, lobbyOptionButtonNbrJoueursMoins]:
+                       lobbyOptionButtonNbrJoueursPlus, lobbyOptionButtonNbrJoueursMoins,
+                       lobbyOptionButtonPlaylistPlus, lobbyOptionButtonPlaylistMoins]:
             button.changeColor(lobbyMousePosition)
             button.update(screen)
 
@@ -337,6 +376,11 @@ class GameState:
                     if self.gameConf.numRounds > 1:
                         lobbyOptionButtonRoundMoins.press(screen)
                         self.gameConf.numRounds -= 1
+
+                if lobbyOptionButtonPlaylistPlus.checkForInput(lobbyMousePosition):
+                    pass
+                if lobbyOptionButtonPlaylistMoins.checkForInput(lobbyMousePosition):
+                    pass
 
             volume_bar.handle_event(event, mousePosition=lobbyMousePosition, screen=screen)
 

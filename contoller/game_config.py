@@ -11,6 +11,7 @@ class GameConfig:
         self.joueurSelectionne = None
         self.sonSelectionne = None
         self.premierPassagePlay = True
+        self.style = "TOPA"
 
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty

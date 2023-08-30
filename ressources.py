@@ -60,7 +60,7 @@ menuQuitButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/
 # Lobby
 
 lobbyWindowOption1 = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_24.png"),
-                                            (0.358 * screen_width, 0.868 * screen_height))
+                                            (0.370 * screen_width, 0.960 * screen_height))
 lobbyWindowOption2 = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_35.png"),
                                             (0.278 * screen_width, 0.164 * screen_height))
 lobbyIconPlayers = pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_98.png"),
@@ -69,6 +69,11 @@ lobbyIconDifficulty = pygame.transform.scale(pygame.image.load("view/assets/butt
                                              (0.072 * screen_width, 0.123 * screen_height))
 lobbyIconRounds = pygame.transform.scale(pygame.image.load("view/assets/buttons/Button2_01.png"),
                                          (0.072 * screen_width, 0.123 * screen_height))
+lobbyIconStyle = pygame.transform.scale(pygame.image.load("view/assets/buttons/Button2_09.png"),
+                                         (0.072 * screen_width, 0.123 * screen_height))
+
+lobbyButtonRight = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_46.png"), (largeurBoutons, hauteurBoutons))]
+lobbyButtonLeft = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_62.png"), (largeurBoutons, hauteurBoutons))]
 
 lobbyButtonPlus = [
     pygame.transform.scale(pygame.image.load("view/assets/buttons/plus/plus_1.png"), (largeurBoutons, hauteurBoutons)),
