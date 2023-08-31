@@ -49,7 +49,11 @@ class GameState:
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.music.unload()
         mixer.music.load("view/assets/AC theme.mp3")
-        mixer.music.set_volume(0.5)
+        volume = 0.3
+        mixer.music.set_volume(volume)
+        self.volume_bar = VolumeBar(ressources.screen_width * 0.805, ressources.screen_height * 0.884,
+                               ressources.screen_width * 0.130, ressources.screen_height * 0.035,
+                               volume = volume)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
         self.premierPassagePlay = True
@@ -114,7 +118,7 @@ class GameState:
         screen.blit(background, (0, 0))
         screen.blit(ressources.menuLogo,
                     (ressources.screen_width * 0.292, ressources.screen_height * 0.046))
-        volume_bar.draw(screen)
+        self.volume_bar.draw(screen)
 
         for button in [menuButtonPlay, menuButtonOption, menuButtonQuit]:
             button.changeColor(menuMousePosition)
@@ -142,7 +146,7 @@ class GameState:
 
                 pygame.display.flip()
 
-            volume_bar.handle_event(event, mousePosition=menuMousePosition, screen=screen)
+            self.volume_bar.handle_event(event, mousePosition=menuMousePosition, screen=screen)
 
     def mainMenutoLobby(self):
 
@@ -221,7 +225,7 @@ class GameState:
 
         lobbyMousePosition = pygame.mouse.get_pos()
         screen.blit(background, (0, 0))
-        volume_bar.draw(screen)
+        self.volume_bar.draw(screen)
 
         num_players = len(self.gameConf.listVignettes)
         for i, vignette in enumerate(self.gameConf.listVignettes):
@@ -410,7 +414,7 @@ class GameState:
                 if lobbyOptionButtonPlaylistMoins.checkForInput(lobbyMousePosition):
                     self.gameConf.updateStyle(-1)
 
-            volume_bar.handle_event(event, mousePosition=lobbyMousePosition, screen=screen)
+            self.volume_bar.handle_event(event, mousePosition=lobbyMousePosition, screen=screen)
 
         pygame.display.flip()
 
@@ -860,7 +864,7 @@ screen = pygame.display.set_mode((ressources.screen_width, ressources.screen_hei
 pygame.display.set_caption("BlindMixTape")
 
 background = pygame.transform.scale(pygame.image.load(ressources.background), (ressources.screen_width, ressources.screen_height))
-volume_bar = VolumeBar(ressources.screen_width * 0.805, ressources.screen_height * 0.884, ressources.screen_width * 0.130, ressources.screen_height * 0.035)
+
 fond_attribution = pygame.transform.scale(pygame.image.load(ressources.attributionPointsFond),
                                           (ressources.screen_width * 0.96, (16 / 17) * ressources.screen_height))
 
