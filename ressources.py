@@ -17,6 +17,9 @@ background = "view/assets/windows/Window_10.png"
 nunitoRegular = "view/assets/Nunito/static/Nunito-Bold.ttf"
 BubbleFont = "view/assets/bubble3D.ttf"
 blomberg = "view/assets/blomberg/Blomberg.otf"
+blueButtonColor = "#007EC3"
+greenButtonColor = "#6BBF00"
+redButtonColor = "#C2181B"
 
 screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
 # screen_width, screen_height = 1280, 720
@@ -146,3 +149,7 @@ attributionPoints = [
                            (0.185 * screen_width, 0.146 * screen_height))]
 attributionPointsBoutonCroix = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_23.png"),
                                                        (0.040 * screen_width, 0.070 * screen_height))]
+
+attributionPointsPassButton = [
+    pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_15.png"),
+                           (0.185 * screen_width, 0.146 * screen_height))]

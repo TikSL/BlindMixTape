@@ -25,7 +25,8 @@ def messageInit():
 
     print(f"Affichage : {ressources.screen_width} x {ressources.screen_height}")
 
-def decouper_phrase(phrase, paquet_max_length= 8):
+
+def decouper_phrase(phrase, paquet_max_length=8):
     liste_paquets = []
     paquet = []
     mots = phrase.split()
@@ -52,8 +53,8 @@ class GameState:
         volume = 0.3
         mixer.music.set_volume(volume)
         self.volume_bar = VolumeBar(ressources.screen_width * 0.805, ressources.screen_height * 0.884,
-                               ressources.screen_width * 0.130, ressources.screen_height * 0.035,
-                               volume = volume)
+                                    ressources.screen_width * 0.130, ressources.screen_height * 0.035,
+                                    volume=volume)
         time.set_timer(USEREVENT, 80)
         self.state = "main_menu"
         self.premierPassagePlay = True
@@ -71,8 +72,10 @@ class GameState:
         nbrVignettesHaut = ceil(nbrVignettes // 2)
         nbrVignettesBas = nbrVignettes - nbrVignettesHaut
 
-        ecartVignettesHaut = (ressources.screen_width - nbrVignettesHaut * 0.097 * ressources.screen_width) / (nbrVignettesHaut + 1)
-        ecartVignettesBas = (ressources.screen_width - nbrVignettesBas * 0.097 * ressources.screen_width) / (nbrVignettesBas + 1)
+        ecartVignettesHaut = (ressources.screen_width - nbrVignettesHaut * 0.097 * ressources.screen_width) / (
+                    nbrVignettesHaut + 1)
+        ecartVignettesBas = (ressources.screen_width - nbrVignettesBas * 0.097 * ressources.screen_width) / (
+                    nbrVignettesBas + 1)
 
         for i, vignette in enumerate(self.gameConf.listVignettes):
             if i <= nbrVignettesHaut - 1:
@@ -92,25 +95,28 @@ class GameState:
 
         elapsed_time1 = 0
 
-        menuButtonPlay = Button(images=ressources.menuPlayButton, pos=(ressources.screen_width * 0.25, ressources.screen_height * 0.40),
+        menuButtonPlay = Button(images=ressources.menuPlayButton,
+                                pos=(ressources.screen_width * 0.25, ressources.screen_height * 0.40),
                                 text_input="PLAY",
                                 font=ressources.get_font(ressources.nunitoRegular,
                                                          round(ressources.screen_width * 0.035)),
-                                base_color="#6BBF00",
+                                base_color=ressources.greenButtonColor,
                                 hovering_color="white")
 
-        menuButtonOption = Button(images = ressources.menuOptionButton, pos=(ressources.screen_width*0.25, ressources.screen_height*0.57),
+        menuButtonOption = Button(images=ressources.menuOptionButton,
+                                  pos=(ressources.screen_width * 0.25, ressources.screen_height * 0.57),
                                   text_input="OPTIONS",
                                   font=ressources.get_font(ressources.nunitoRegular,
                                                            round(ressources.screen_width * 0.035)),
-                                  base_color="#007EC3",
+                                  base_color=ressources.blueButtonColor,
                                   hovering_color="white")
 
-        menuButtonQuit = Button(images=ressources.menuQuitButton, pos=(ressources.screen_width * 0.25, ressources.screen_height * 0.74),
+        menuButtonQuit = Button(images=ressources.menuQuitButton,
+                                pos=(ressources.screen_width * 0.25, ressources.screen_height * 0.74),
                                 text_input="QUIT",
                                 font=ressources.get_font(ressources.nunitoRegular,
                                                          round(ressources.screen_width * 0.035)),
-                                base_color="#C2181B",
+                                base_color=ressources.redButtonColor,
                                 hovering_color="white")
 
         menuMousePosition = pygame.mouse.get_pos()
@@ -277,7 +283,8 @@ class GameState:
             center=(ressources.screen_width * 0.286, pos_y + ressources.screen_height * 0.036))
         screen.blit(lobbyTitreOptionDifficulte, lobbyTitreOptionDifficulte_Rect)
 
-        lobbyDataLvlDifficulte = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
+        lobbyDataLvlDifficulte = ressources.get_font(ressources.nunitoRegular,
+                                                     round(ressources.screen_height * 0.029)).render(
             f"{difficulty[self.gameConf.difficulty]}", True,
 
             "#CC191C")
@@ -288,9 +295,11 @@ class GameState:
         # Option nombres de rounds
         pos_y = pos_y + ressources.screen_height * 0.166
         screen.blit(ressources.lobbyWindowOption2, (ressources.screen_width * 0.117, pos_y))
-        screen.blit(ressources.lobbyIconRounds, (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
+        screen.blit(ressources.lobbyIconRounds,
+                    (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
 
-        lobbyTitreOptionRounds = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
+        lobbyTitreOptionRounds = ressources.get_font(ressources.nunitoRegular,
+                                                     round(ressources.screen_height * 0.029)).render(
             f"Nombre de manches", True,
             "#CC191C")
         lobbyTitreOptionRounds_Rect = lobbyTitreOptionRounds.get_rect(
@@ -311,7 +320,7 @@ class GameState:
                     (ressources.screen_width * 0.130, pos_y + ressources.screen_height * 0.015))
 
         lobbyTitreOptionStyle = ressources.get_font(ressources.nunitoRegular,
-                                                     round(ressources.screen_height * 0.029)).render(
+                                                    round(ressources.screen_height * 0.029)).render(
             f"Style de playlist", True,
             "#CC191C")
         lobbyTitreOptionStyle_Rect = lobbyTitreOptionStyle.get_rect(
@@ -320,16 +329,18 @@ class GameState:
 
         liste_texte = []
         texte = decouper_phrase(self.gameConf.style)
-        for i, mot in enumerate(texte) :
+        for i, mot in enumerate(texte):
 
-            lobbyDataStyle = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.029)).render(
+            lobbyDataStyle = ressources.get_font(ressources.nunitoRegular,
+                                                 round(ressources.screen_height * 0.029)).render(
                 f"{mot}", True,
                 "#CC191C")
             if len(texte) > 1:
                 lobbyDataStyle_Rect = lobbyDataStyle.get_rect(
-                    center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.084 + ressources.screen_height * 0.025 * i))
+                    center=(ressources.screen_width * 0.293,
+                            pos_y + ressources.screen_height * 0.084 + ressources.screen_height * 0.025 * i))
                 liste_texte.append((lobbyDataStyle, lobbyDataStyle_Rect))
-            else :
+            else:
                 lobbyDataStyle_Rect = lobbyDataStyle.get_rect(
                     center=(ressources.screen_width * 0.293, pos_y + ressources.screen_height * 0.094))
                 liste_texte.append((lobbyDataStyle, lobbyDataStyle_Rect))
@@ -490,9 +501,9 @@ class GameState:
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
-            if song.found:
+            if song.found and song.founder != None:
                 playListFounder.append((pygame.transform.scale(pygame.image.load(song.founder.vignette.bufferPerso), (
-                0.065 * ressources.screen_width, 0.116 * ressources.screen_height)), button_positions[song.id]))
+                    0.065 * ressources.screen_width, 0.116 * ressources.screen_height)), button_positions[song.id]))
 
         for id, song in enumerate(self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver):
             if song.found:
@@ -502,12 +513,14 @@ class GameState:
             left = button_positions[id][0] + 0.09 * ressources.screen_width
             playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
                 song.title, True, color)
-            playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * ressources.screen_width)
+            playTitreSon_Rect = playTitreSon.get_rect(left=left,
+                                                      top=button_positions[id][1] - 0.05 * ressources.screen_width)
 
             playArtistSon = ressources.get_font(ressources.nunitoRegular,
                                                 round(ressources.screen_height * 0.02)).render(
                 song.artist, True, color)
-            playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * ressources.screen_width)
+            playArtistSon_Rect = playArtistSon.get_rect(left=left,
+                                                        top=button_positions[id][1] - 0.02 * ressources.screen_width)
 
             playListTitles.append((playTitreSon, playTitreSon_Rect))
             playListArtists.append((playArtistSon, playArtistSon_Rect))
@@ -571,7 +584,7 @@ class GameState:
                     text_input=None, font=None, base_color=None, hovering_color=None
                 )
             )
-            if song.found:
+            if song.found and song.founder != None:
                 playListFounder.append((pygame.transform.scale(pygame.image.load(song.founder.vignette.bufferPerso), (
                     0.065 * ressources.screen_width, 0.116 * ressources.screen_height)), button_positions[song.id]))
 
@@ -583,26 +596,31 @@ class GameState:
             left = button_positions[id][0] + 0.09 * ressources.screen_width
             playTitreSon = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.02)).render(
                 song.title, True, color)
-            playTitreSon_Rect = playTitreSon.get_rect(left=left, top=button_positions[id][1] - 0.05 * ressources.screen_width)
+            playTitreSon_Rect = playTitreSon.get_rect(left=left,
+                                                      top=button_positions[id][1] - 0.05 * ressources.screen_width)
 
             playArtistSon = ressources.get_font(ressources.nunitoRegular,
                                                 round(ressources.screen_height * 0.02)).render(
                 song.artist, True, color)
-            playArtistSon_Rect = playArtistSon.get_rect(left=left, top=button_positions[id][1] - 0.02 * ressources.screen_width)
+            playArtistSon_Rect = playArtistSon.get_rect(left=left,
+                                                        top=button_positions[id][1] - 0.02 * ressources.screen_width)
 
             playListTitles.append((playTitreSon, playTitreSon_Rect))
             playListArtists.append((playArtistSon, playArtistSon_Rect))
 
-        playButtonPass = Button(images=ressources.menuPlayButton, pos=(ressources.screen_width * 0.85, ressources.screen_height * 0.12),
+        playButtonPass = Button(images=ressources.menuPlayButton,
+                                pos=(ressources.screen_width * 0.85, ressources.screen_height * 0.12),
                                 text_input="PASSER",
-                                font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.045)),
-                                base_color="White",
-                                hovering_color="#6DC300")
+                                font=ressources.get_font(ressources.nunitoRegular,
+                                                         round(ressources.screen_width * 0.035)),
+                                base_color=ressources.greenButtonColor,
+                                hovering_color="white")
 
         screen.blit(background, (0, 0))
         playMousePosition = pygame.mouse.get_pos()
 
         for button in [playButtonMusic, playButtonPass] + playListButtonCover:
+            button.changeColor(playMousePosition)
             button.update(screen)
 
         for info in playListTitles + playListArtists + playListFounder:
@@ -624,7 +642,7 @@ class GameState:
                     pass
                 for id, button in enumerate(playListButtonCover):
                     if button.checkForInput(playMousePosition) and not \
-                    self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver[id].found:
+                            self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver[id].found:
                         self.gameConf.sonSelectionne = id
                         self.state = "round_attrib"
                         pass
@@ -638,27 +656,38 @@ class GameState:
 
     def attributionPoints(self):
         attributionPointsTitre = Button(images=ressources.attributionPoints,
-                                        pos=(ressources.screen_width * (3 / 12), ressources.screen_height * 0.880),
-                                        text_input="Titre",
-                                        font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.035)),
-                                        base_color="White",
-                                        hovering_color="#2F6DC7")
+                                        pos=(ressources.screen_width * (3 / 15), ressources.screen_height * 0.880),
+                                        text_input="TITRE",
+                                        font=ressources.get_font(ressources.nunitoRegular,
+                                                                 round(ressources.screen_width * 0.035)),
+                                        base_color=ressources.blueButtonColor,
+                                        hovering_color="white")
 
         attributionPointsGroupe = Button(images=ressources.attributionPoints,
-                                         pos=(ressources.screen_width * (6 / 12), ressources.screen_height * 0.880),
-                                         text_input="Groupe",
+                                         pos=(ressources.screen_width * (6 / 15), ressources.screen_height * 0.880),
+                                         text_input="ARTISTE",
                                          font=ressources.get_font(ressources.nunitoRegular,
                                                                   round(ressources.screen_width * 0.035)),
-                                         base_color="White",
-                                         hovering_color="#2F6DC7")
+                                         base_color=ressources.blueButtonColor,
+                                         hovering_color="white")
 
         attributionPointsTitreEtGroupe = Button(images=ressources.attributionPoints,
-                                                pos=(ressources.screen_width * (9 / 12), ressources.screen_height * 0.880),
-                                                text_input="Titre+Groupe",
+                                                pos=(
+                                                ressources.screen_width * (9 / 15), ressources.screen_height * 0.880),
+                                                text_input="LES DEUX",
                                                 font=ressources.get_font(ressources.nunitoRegular,
-                                                                         round(ressources.screen_width * 0.026)),
-                                                base_color="White",
-                                                hovering_color="#2F6DC7")
+                                                                         round(ressources.screen_width * 0.035)),
+                                                base_color=ressources.blueButtonColor,
+                                                hovering_color="white")
+
+        attributionPointsPassButton = Button(images=ressources.attributionPointsPassButton,
+                                             pos=(
+                                             ressources.screen_width * (12 / 15), ressources.screen_height * 0.880),
+                                             text_input="PASSER",
+                                             font=ressources.get_font(ressources.nunitoRegular,
+                                                                      round(ressources.screen_width * 0.035)),
+                                             base_color=ressources.redButtonColor,
+                                             hovering_color="white")
 
         attributionPointsCroix = Button(images=ressources.attributionPointsBoutonCroix,
                                         pos=(ressources.screen_width * 0.92, ressources.screen_height * (1 / 8)),
@@ -671,9 +700,10 @@ class GameState:
 
         for i, vignette in enumerate(self.gameConf.listVignettes):
             vignette.afficher(screen)
+
         for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre,
-                       attributionPointsCroix]:
-            if self.gameConf.joueurSelectionne:
+                       attributionPointsCroix, attributionPointsPassButton]:
+            if self.gameConf.joueurSelectionne or button == attributionPointsPassButton:
                 button.changeColor(menuMousePosition)
             button.update(screen)
 
@@ -682,6 +712,15 @@ class GameState:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if attributionPointsPassButton.checkForInput(menuMousePosition):
+                    attributionPointsPassButton.press(screen)
+                    self.gameConf.listMixtapes[self.gameConf.currentRound - 1].listeATrouver[
+                        self.gameConf.sonSelectionne].found = True
+                    for vignette in self.gameConf.listVignettes:
+                        vignette.selected = False
+                    self.state = "round_play"
+                    pass
+
                 if self.gameConf.joueurSelectionne:
 
                     for button in [attributionPointsTitreEtGroupe, attributionPointsGroupe, attributionPointsTitre]:
@@ -759,18 +798,24 @@ class GameState:
                                                    ressources.screen_height * 0.32))
             if i >= 3:
                 players_sorted[i].vignette.setPos((ressources.screen_width * 0.01 + (
-                            i - 2) * 0.15 * ressources.screen_width, ressources.screen_height * 0.7))
+                        i - 2) * 0.15 * ressources.screen_width, ressources.screen_height * 0.7))
             players_sorted[i].vignette.afficher(screen)
 
-        playButtonPass = Button(images=ressources.menuPlayButton, pos=(ressources.screen_width * 0.85, ressources.screen_height * 0.12),
+        playButtonPass = Button(images=ressources.menuPlayButton,
+                                pos=(ressources.screen_width * 0.85, ressources.screen_height * 0.12),
                                 text_input="PASSER",
-                                font=ressources.get_font(ressources.nunitoRegular, round(ressources.screen_width * 0.045)),
-                                base_color="White",
-                                hovering_color="#6DC300")
-
-        playButtonPass.update(screen)
+                                font=ressources.get_font(ressources.nunitoRegular,
+                                                         round(ressources.screen_width * 0.035)),
+                                base_color=ressources.greenButtonColor,
+                                hovering_color="white")
 
         menuMousePosition = pygame.mouse.get_pos()
+
+
+        playButtonPass.changeColor(menuMousePosition)
+        playButtonPass.update(screen)
+
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -863,7 +908,8 @@ screen = pygame.display.set_mode((ressources.screen_width, ressources.screen_hei
 
 pygame.display.set_caption("BlindMixTape")
 
-background = pygame.transform.scale(pygame.image.load(ressources.background), (ressources.screen_width, ressources.screen_height))
+background = pygame.transform.scale(pygame.image.load(ressources.background),
+                                    (ressources.screen_width, ressources.screen_height))
 
 fond_attribution = pygame.transform.scale(pygame.image.load(ressources.attributionPointsFond),
                                           (ressources.screen_width * 0.96, (16 / 17) * ressources.screen_height))

@@ -35,7 +35,7 @@ def generationMixtape(id_playlist, difficulty):
     listeMixtape = []
     listeATrouver = []
     t_init = time.time()
-    while len(listeMixtape) < 6 and time.time() - t_init < 90:
+    while len(listeMixtape) < 6 and time.time() - t_init < 0:
         essai = random.choice(liste_sons)
         if essai not in listeMixtape:
             try:
@@ -81,8 +81,8 @@ class Mixtape:
 
         self.nomFichierMix = None
         self.mixtape, self.listeATrouver = generationMixtape(playlist, difficulty)
-        self.dl()
-        self.normaliserAudio()
+        # self.dl()
+        # self.normaliserAudio()
 
     def dspInfos(self):
         print(f"---------\n"
