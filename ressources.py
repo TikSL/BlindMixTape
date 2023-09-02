@@ -58,7 +58,7 @@ menuGIF = [pygame.transform.scale(pygame.image.load(f"view/assets/GIF_dance/fram
 menuPlayButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_14.png"),
                                          (0.185 * screen_width, 0.146 * screen_height))]
 menuOptionButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_13.png"),
-                                         (0.185 * screen_width, 0.146 * screen_height))]
+                                           (0.185 * screen_width, 0.146 * screen_height))]
 menuQuitButton = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_15.png"),
                                          (0.185 * screen_width, 0.146 * screen_height))]
 
@@ -75,10 +75,12 @@ lobbyIconDifficulty = pygame.transform.scale(pygame.image.load("view/assets/butt
 lobbyIconRounds = pygame.transform.scale(pygame.image.load("view/assets/buttons/Button2_01.png"),
                                          (0.072 * screen_width, 0.123 * screen_height))
 lobbyIconStyle = pygame.transform.scale(pygame.image.load("view/assets/buttons/Button2_09.png"),
-                                         (0.072 * screen_width, 0.123 * screen_height))
+                                        (0.072 * screen_width, 0.123 * screen_height))
 
-lobbyButtonRight = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_46.png"), (largeurBoutons, hauteurBoutons))]
-lobbyButtonLeft = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_62.png"), (largeurBoutons, hauteurBoutons))]
+lobbyButtonRight = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_46.png"),
+                                           (largeurBoutons, hauteurBoutons))]
+lobbyButtonLeft = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_62.png"),
+                                          (largeurBoutons, hauteurBoutons))]
 
 lobbyButtonPlus = [
     pygame.transform.scale(pygame.image.load("view/assets/buttons/plus/plus_1.png"), (largeurBoutons, hauteurBoutons)),

@@ -42,7 +42,7 @@ class GameConfig:
         if param == 1:
             if index == len(listeStyle)-1:
                 self.style = listeStyle[0]
-            else :
+            else:
                 self.style = listeStyle[index + 1]
         elif param == -1:
             if index == 0:

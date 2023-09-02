@@ -5,7 +5,6 @@ import time
 
 from pytube import Search
 
-import ressources
 import song
 
 

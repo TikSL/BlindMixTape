@@ -1,5 +1,3 @@
-from typing import re
-
 import pygame
 import sys
 from pygame import mixer, time, USEREVENT
