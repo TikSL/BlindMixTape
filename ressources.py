@@ -30,6 +30,8 @@ def get_font(font, size):  # Fonction pour obtenir la police Press-Start-2P à l
 playlistsDeezer = {
     "Actuel": 53362031,
     "FR 2022": 741188545,
+    "FR 1980": 6025166364,
+    "Afrobeat": 11272355264,    
     "Monde 2022": 10896810924,
     "Rap FR 2022": 10855125902,
     "Rock": 1306931615,

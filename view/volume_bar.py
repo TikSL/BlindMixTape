@@ -5,20 +5,18 @@ import ressources
 
 
 class VolumeBar:
-    def __init__(self, x, y, width, height,volume, min_volume=0.0, max_volume=1.0):
+    def __init__(self, x, y, width, height,volume):
         self.bufferVolume = None
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self.min_volume = min_volume
-        self.max_volume = max_volume
+        self.min_volume = 0
+        self.max_volume = 1
         self.current_volume = volume
         self.is_dragging = False
-
         self.volume_fill = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_66.png"), (self.width, self.height))
         self.volume_bar = pygame.transform.scale(pygame.image.load("view/assets/windows/Window_65.png"), (self.width, self.height))
-        #self.volume_icon = pygame.transform.scale(pygame.image.load("assets/buttons/Button2_25.png"), (self.height*2, self.height*2))
         self.volumeButton = button.Button(
             images=ressources.lobbySoundOn, pos=(self.x - ressources.screen_width*0.023, self.y + ressources.screen_height*0.020),
             text_input=" ", font=ressources.get_font(ressources.nunitoRegular, 70),
