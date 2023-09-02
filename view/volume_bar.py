@@ -31,7 +31,6 @@ class VolumeBar:
         volume_bar_current = pygame.transform.scale(self.volume_bar.subsurface((0, 0, volume_bar_width, self.height)),
                                                     (volume_bar_width, self.height))
         surface.blit(volume_bar_current, (self.x, self.y))
-        print(volume_bar_width)
         surface.blit(pygame.transform.scale(pygame.image.load("view/assets/windows/Window_25.png"),
                                             (ressources.screen_width*0.01, ressources.screen_height*0.045))
                      , (self.x+volume_bar_width-ressources.screen_width*0.003, self.y-ressources.screen_height*0.007))
