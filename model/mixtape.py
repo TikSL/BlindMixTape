@@ -80,8 +80,8 @@ class Mixtape:
 
         self.nomFichierMix = None
         self.mixtape, self.listeATrouver = generationMixtape(playlist, difficulty)
-        # self.dl()
-        # self.normaliserAudio()
+        self.dl()
+        self.normaliserAudio()
 
     def dspInfos(self):
         print(f"---------\n"

@@ -10,6 +10,7 @@ from game_config import GameConfig
 from mixtape import Mixtape
 from vignette_joueur import VignetteJoueur
 from volume_bar import VolumeBar
+import threading
 
 
 def messageInit():
@@ -427,7 +428,18 @@ class GameState:
 
         pygame.display.flip()
 
-    def toRound(self):
+    # def toRound(self):
+
+
+
+
+
+
+        # Création de la fenêtre de l'écran de chargement
+
+
+        # Fonction de chargement
+    def loading_function(self):
         self.gameConf.currentRound += 1
         if self.gameConf.currentRound == 1:
             for vignette in self.gameConf.listVignettes:
@@ -455,6 +467,41 @@ class GameState:
         self.gameConf.listMixtapes.append(Mixtape(diff, playlist=id_playlist))
         self.gameConf.dspInfos()
         self.state = "round_play"
+
+        # Fonction d'affichage de l'écran de chargement
+    def display_loading_screen(self):
+        while self.state == "to_round":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+
+            pygame.display.set_caption("Écran de chargement")
+
+            # Création de l'écran de chargement
+            loading_font = pygame.font.Font(None, 36)
+            loading_text = loading_font.render("Chargement en cours...", True, (255, 255, 255))
+            loading_rect = loading_text.get_rect(center=screen.get_rect().center)
+            # loading_info = loading_font.render(f"Son {len(self.gameConf.listMixtapes[self.gameConf.currentRound-1])} / 6")
+            # loading_info_rect = loading_info.get_rect(center=(400, 400))
+
+            
+            # Afficher l'écran de chargement
+            screen.fill((0, 0, 0))
+            screen.blit(loading_text, loading_rect)
+            # screen.blit(loading_info, loading_info_rect)
+            pygame.display.flip()
+
+    def toRound(self):
+        # Créer un thread pour la fonction de chargement
+        loading_thread = threading.Thread(target=self.loading_function)
+
+        # Lancer le thread de chargement
+        loading_thread.start()
+
+        # Afficher l'écran de chargement
+        self.display_loading_screen()
+
 
     def roundListening(self):
 
