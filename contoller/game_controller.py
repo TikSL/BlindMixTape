@@ -22,7 +22,7 @@ def messageInit():
           f"Lien GitHub : https://github.com/TikSL/BlindMixTape\n"
           f"Version {ressources.version}\n")
 
-    print(f"Affichage : {ressources.screen_width} x {ressources.screen_height}")
+    print(f"Affichage : {ressources.screen_width} x {ressources.screen_height}\n\n")
 
 
 def decouper_phrase(phrase, paquet_max_length=8):
