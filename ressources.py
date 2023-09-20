@@ -130,6 +130,10 @@ lobbySoundOn = [
 
 persos = [f"view/assets/perso/perso_{k}.png" for k in range(1, 21)]
 
+# To Round
+
+wheel_image = pygame.image.load("view/assets/disk_black.png")
+
 # Play
 
 playButtonPlayMusic = [pygame.transform.scale(pygame.image.load("view/assets/buttons/Button_47.png"),

@@ -428,17 +428,6 @@ class GameState:
 
         pygame.display.flip()
 
-    # def toRound(self):
-
-
-
-
-
-
-        # Création de la fenêtre de l'écran de chargement
-
-
-        # Fonction de chargement
     def loading_function(self):
         self.gameConf.currentRound += 1
         if self.gameConf.currentRound == 1:
@@ -468,40 +457,34 @@ class GameState:
         self.gameConf.dspInfos()
         self.state = "round_play"
 
-        # Fonction d'affichage de l'écran de chargement
     def display_loading_screen(self):
+        rotation_angle = 0
         while self.state == "to_round":
+
+            screen.blit(background, (0,0))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
 
-            pygame.display.set_caption("Écran de chargement")
+            rotated_wheel = pygame.transform.rotate(ressources.wheel_image, rotation_angle)
+            wheel_rect = rotated_wheel.get_rect(center=(ressources.screen_width // 2, ressources.screen_height // 2))
 
-            # Création de l'écran de chargement
-            loading_font = pygame.font.Font(None, 36)
-            loading_text = loading_font.render("Chargement en cours...", True, (255, 255, 255))
-            loading_rect = loading_text.get_rect(center=screen.get_rect().center)
-            # loading_info = loading_font.render(f"Son {len(self.gameConf.listMixtapes[self.gameConf.currentRound-1])} / 6")
-            # loading_info_rect = loading_info.get_rect(center=(400, 400))
+            loading_text = ressources.get_font(ressources.nunitoRegular, round(ressources.screen_height * 0.052)).render("Chargement en cours...", True, "black")
+            loading_rect = loading_text.get_rect(center=(ressources.screen_width // 2, ressources.screen_height // 2 - 350))
 
-            
-            # Afficher l'écran de chargement
-            screen.fill((0, 0, 0))
+            rotation_angle += 10
+            if rotation_angle >= 360:
+                rotation_angle = 0
+
+            screen.blit(rotated_wheel, wheel_rect)
             screen.blit(loading_text, loading_rect)
-            # screen.blit(loading_info, loading_info_rect)
             pygame.display.flip()
 
     def toRound(self):
-        # Créer un thread pour la fonction de chargement
         loading_thread = threading.Thread(target=self.loading_function)
-
-        # Lancer le thread de chargement
         loading_thread.start()
-
-        # Afficher l'écran de chargement
         self.display_loading_screen()
-
 
     def roundListening(self):
 
