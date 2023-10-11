@@ -7,6 +7,7 @@ from pytube import Search
 
 import song
 
+songPasses = []
 
 def download_image(url, destination):
     response = requests.get(url)
@@ -34,9 +35,10 @@ def generationMixtape(id_playlist, difficulty):
     listeMixtape = []
     listeATrouver = []
     t_init = time.time()
-    while len(listeMixtape) < 6 and time.time() - t_init < 0:
+    while len(listeMixtape) < 6 and time.time() - t_init < 60:
         essai = random.choice(liste_sons)
-        if essai not in listeMixtape:
+        if essai not in listeMixtape and essai not in songPasses:
+
             try:
                 search_query = f"{essai.artist.name} {essai.title}"
                 search_results = Search(search_query).results
@@ -50,6 +52,7 @@ def generationMixtape(id_playlist, difficulty):
                 diffSon = _evalDiff(diffSon)
                 if diffSon in difficulty:
                     difficulty.remove(diffSon)
+                    songPasses.append(essai)
                     listeMixtape.append(essai)
                     start = random.randint(30000, 60000)
                     listeATrouver.append(song.Song(essai.title_short, essai.artist.name, start, diffSon,
@@ -63,7 +66,8 @@ def generationMixtape(id_playlist, difficulty):
     if len(listeMixtape) < 6:
         while len(listeMixtape) < 6:
             essai = random.choice(liste_sons)
-            if essai not in listeMixtape:
+            if essai not in listeMixtape and essai not in songPasses:
+                songPasses.append(essai)
                 listeMixtape.append(essai)
                 start = random.randint(30000, 60000)
                 listeATrouver.append(song.Song(essai.title_short, essai.artist.name, start, None,
@@ -76,7 +80,7 @@ def generationMixtape(id_playlist, difficulty):
 
 class Mixtape:
 
-    def __init__(self, difficulty, playlist="Rock"):
+    def __init__(self, difficulty, playlist="Rock", ):
 
         self.nomFichierMix = None
         self.mixtape, self.listeATrouver = generationMixtape(playlist, difficulty)

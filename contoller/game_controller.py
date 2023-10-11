@@ -428,7 +428,7 @@ class GameState:
 
         pygame.display.flip()
 
-    def loading_function(self):
+    def loading_function(self, currentRound=None):
         self.gameConf.currentRound += 1
         if self.gameConf.currentRound == 1:
             for vignette in self.gameConf.listVignettes:
